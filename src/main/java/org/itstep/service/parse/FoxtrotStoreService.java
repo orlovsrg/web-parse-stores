@@ -20,11 +20,11 @@ public class FoxtrotStoreService implements StoreService {
 
     private final Logger log = LoggerFactory.getLogger(FoxtrotStoreService.class);
 
-    private String startPage;
-    private String urlParsingTypePage;
+    private String urlParsingPageByType;
     private WebDriver driver;
     private String whatParse;
     private int storeId;
+    private String selectorKeyProductType;
     private final String variablePagination = "?page=";
 
     @Autowired
@@ -46,25 +46,22 @@ public class FoxtrotStoreService implements StoreService {
         whatParse = "Pre processing...";
 
         try {
-            startPage = dataEquipment.storeUrl(nameStore);
             storeId = dataEquipment.storeId(nameStore);
             WebDriverManager.chromedriver().setup();
-
             List<SelectorKey> selectorKeyList = dataEquipment.getSelectorKey(nameStore);
+
             for (SelectorKey selectorKey : selectorKeyList) {
                 log.info("SelectorKey = {}", selectorKey);
             }
+
             int countSelectorKey = selectorKeyList.size();
-            log.info("countSelectorKey = {}", countSelectorKey);
 
             for (int i = 0; i < countSelectorKey; i++) {
-                String selectorKeyProductType = selectorKeyList.get(i).getProductType();
-                String selectorKeySelectorKey = selectorKeyList.get(i).getSelectorKey();
-                driver = new ChromeDriver();
-                driver.get(startPage);
-                WebElement elementLink = driver.findElement(By.cssSelector("a[href*='" + selectorKeySelectorKey + "']"));
-                urlParsingTypePage = elementLink.getAttribute("href");
-                parsProduct(urlParsingTypePage, selectorKeyProductType);
+                selectorKeyProductType = selectorKeyList.get(i).getProductType();
+                urlParsingPageByType = selectorKeyList.get(i).getSelectorKey();
+                System.out.println("selectorKeyProductType = " + selectorKeyProductType);
+                System.out.println("urlParsingPageByType = " + urlParsingPageByType);
+                parsProduct(urlParsingPageByType, selectorKeyProductType);
             }
 
         } catch (InterruptedException e) {
@@ -76,7 +73,11 @@ public class FoxtrotStoreService implements StoreService {
     public void parsProduct(String urlParsingTypePage, String productType) throws InterruptedException {
         whatParse = "Scanning " + productType;
 
+        log.info("path smatrtfon {}" + urlParsingTypePage);
+
         ModelEquipment modelEquipment = new ModelEquipment();
+
+        driver = new ChromeDriver();
         driver.get(urlParsingTypePage);
         Thread.sleep(2000);
         WebElement countPage = driver.findElement(By.cssSelector("div[class='listing__pagination']"));

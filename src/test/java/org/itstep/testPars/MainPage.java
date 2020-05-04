@@ -3,37 +3,42 @@ package org.itstep.testPars;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.List;
 
 
 public class MainPage {
     private static final Logger log = LoggerFactory.getLogger(MainPage.class);
-    private static String foxtrotStartPage = "https://www.foxtrot.com.ua/";
-    private static String foxtrotSmartphones;
+    private static String comfyStartPage = "https://comfy.ua/";
+
 
     public static void main(String[] args) throws IOException {
         String page = Paths.get("home.html").toString();
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
 
-        try (FileWriter writer = new FileWriter(page, true)) {
-            log.info("URL foxtrotStartPage {}", foxtrotStartPage);
+        try (FileWriter writer = new FileWriter(page)) {
 
-            driver.get(foxtrotStartPage);
+            driver.get(comfyStartPage);
+            Thread.sleep(2000);
+//            writer.write(driver.getPageSource());
+//            writer.flush();
+
+            String element = driver.findElement(By.cssSelector("a[href*='smartfon']")).getAttribute("href");
+
+            log.info("link of smartphone {}", element);
+            driver.get("https://www.foxtrot.com.ua/ru/shop/mobilnye_telefony_smartfon.html");
+            Thread.sleep(10000);
             writer.write(driver.getPageSource());
-            WebElement element = driver.findElement(By.cssSelector("a[href*='mobilnye_telefony_smartfon']"));
+            writer.flush();
+//            WebElement element = driver.findElement(By.cssSelector("a[href*='mobilnye_telefony_smartfon']"));
 
 //            foxtrotSmartphones = element.getAttribute("href");
 //            String paginationVariable = foxtrotSmartphones + "?page=";
-            log.info("URL foxtrotSmartphones {}", foxtrotSmartphones);
 
 //            driver.get(foxtrotSmartphones);
 //            Thread.sleep(3000);
@@ -85,6 +90,8 @@ public class MainPage {
 //                });
 //            }
 
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         } finally {
             driver.quit();
         }
