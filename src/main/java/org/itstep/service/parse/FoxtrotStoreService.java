@@ -21,9 +21,7 @@ public class FoxtrotStoreService implements StoreService {
     private final Logger log = LoggerFactory.getLogger(FoxtrotStoreService.class);
 
     private String startPage;
-    private String urlPhonePage;
-    private String urlLaptop;
-    private String urlTVSets;
+    private String urlParsingTypePage;
     private WebDriver driver;
     private String whatParse;
     private int storeId;
@@ -46,6 +44,7 @@ public class FoxtrotStoreService implements StoreService {
     @Override
     public void parse(String nameStore) {
         whatParse = "Pre processing...";
+
         try {
             startPage = dataEquipment.storeUrl(nameStore);
             storeId = dataEquipment.storeId(nameStore);
@@ -63,23 +62,10 @@ public class FoxtrotStoreService implements StoreService {
                 String selectorKeySelectorKey = selectorKeyList.get(i).getSelectorKey();
                 driver = new ChromeDriver();
                 driver.get(startPage);
-                WebElement elementPhoneLink = driver.findElement(By.cssSelector("a[href*='" + selectorKeySelectorKey + "']"));
-                urlPhonePage = elementPhoneLink.getAttribute("href");
-                phone(urlPhonePage, selectorKeyProductType);
+                WebElement elementLink = driver.findElement(By.cssSelector("a[href*='" + selectorKeySelectorKey + "']"));
+                urlParsingTypePage = elementLink.getAttribute("href");
+                parsProduct(urlParsingTypePage, selectorKeyProductType);
             }
-
-//            driver = new ChromeDriver();
-//            driver.get(startPage);
-//            WebElement elementLapTopLink = driver.findElement(By.cssSelector("a[href*='noutbuki']"));
-//            urlLaptop = elementLapTopLink.getAttribute("href");
-//            laptop(urlLaptop);
-//
-//            driver = new ChromeDriver();
-//            driver.get(startPage);
-//            WebElement elementTvSetLink = driver.findElement(By.cssSelector("a[href*='led_televizory']"));
-//            urlTVSets = elementTvSetLink.getAttribute("href");
-//            tvSet(urlTVSets);
-
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -87,24 +73,27 @@ public class FoxtrotStoreService implements StoreService {
     }
 
     @Override
-    public void phone(String urlPhonePage, String productType) throws InterruptedException {
-        whatParse = "Scanning phone";
+    public void parsProduct(String urlParsingTypePage, String productType) throws InterruptedException {
+        whatParse = "Scanning " + productType;
 
         ModelEquipment modelEquipment = new ModelEquipment();
-        driver.get(urlPhonePage);
+        driver.get(urlParsingTypePage);
         Thread.sleep(2000);
         WebElement countPage = driver.findElement(By.cssSelector("div[class='listing__pagination']"));
         List<WebElement> elementsCount = countPage.findElements(By.cssSelector("li[data-page]"));
 
+
+        // Page counter variable
 //        int count = elementsCount.stream()
 //                .map(e -> e.getAttribute("data-page"))
 //                .map(e -> Integer.parseInt(e))
 //                .max(Integer::compare)
 //                .get();
 
+        // Test with a limit of 2 page. There is here should be variable "count".
         for (int i = 1; i <= 2; i++) {
 
-            driver.get(urlPhonePage + variablePagination + i);
+            driver.get(urlParsingTypePage + variablePagination + i);
 
             List<WebElement> elementList = driver.findElements(By.cssSelector("div[class='card js-card isTracked']"));
 
@@ -139,110 +128,4 @@ public class FoxtrotStoreService implements StoreService {
         driver.quit();
     }
 
-    @Override
-    public void laptop(String urlLaptopPage) throws InterruptedException {
-        whatParse = "Scanning laptop";
-
-        ModelEquipment modelEquipment = new ModelEquipment();
-        driver.get(urlLaptopPage);
-        Thread.sleep(2000);
-        WebElement countPage = driver.findElement(By.cssSelector("div[class='listing__pagination']"));
-        List<WebElement> elementsCount = countPage.findElements(By.cssSelector("li[data-page]"));
-
-        int count = elementsCount.stream()
-                .map(e -> e.getAttribute("data-page"))
-                .map(e -> Integer.parseInt(e))
-                .max(Integer::compare)
-                .get();
-
-        for (int i = 1; i <= count; i++) {
-
-            driver.get(urlLaptopPage + variablePagination + i);
-
-            List<WebElement> elementList = driver.findElements(By.cssSelector("div[class='card js-card isTracked']"));
-
-            elementList.forEach(e -> {
-
-                String title;
-                int price;
-                String url;
-                String imgUrl;
-                int storeId = this.storeId;
-
-                title = e.findElement(By.cssSelector("div[class='card__body']"))
-                        .findElement(By.cssSelector("a[class='card__title']"))
-                        .getAttribute("title");
-
-                price = formattingIncomingData.formattingPrice(e.findElement(By.cssSelector("div[class='card__body']"))
-                        .findElement(By.cssSelector("div[class='card-price']"))
-                        .getText());
-
-                url = e.findElement(By.cssSelector("div[class='card__body']"))
-                        .findElement(By.cssSelector("a[class='card__title']"))
-                        .getAttribute("href");
-
-                imgUrl = e.findElement(By.cssSelector("div[class='card__image']"))
-                        .findElement(By.cssSelector("img[class='lazy']"))
-                        .getAttribute("src");
-
-                dataEquipment.save("laptop", new ModelEquipment(title, price, url, imgUrl, storeId));
-            });
-        }
-
-
-        driver.quit();
-    }
-
-    @Override
-    public void tvSet(String urlTvSetPage) throws InterruptedException {
-        whatParse = "Scanning tvSet";
-
-        ModelEquipment modelEquipment = new ModelEquipment();
-        driver.get(urlTvSetPage);
-        Thread.sleep(2000);
-        WebElement countPage = driver.findElement(By.cssSelector("div[class='listing__pagination']"));
-        List<WebElement> elementsCount = countPage.findElements(By.cssSelector("li[data-page]"));
-
-        int count = elementsCount.stream()
-                .map(e -> e.getAttribute("data-page"))
-                .map(e -> Integer.parseInt(e))
-                .max(Integer::compare)
-                .get();
-
-        for (int i = 1; i <= count; i++) {
-
-            driver.get(urlTvSetPage + variablePagination + i);
-
-            List<WebElement> elementList = driver.findElements(By.cssSelector("div[class='card js-card isTracked']"));
-
-            elementList.forEach(e -> {
-
-                String title;
-                int price;
-                String url;
-                String imgUrl;
-                int storeId = this.storeId;
-
-                title = e.findElement(By.cssSelector("div[class='card__body']"))
-                        .findElement(By.cssSelector("a[class='card__title']"))
-                        .getAttribute("title");
-
-                price = formattingIncomingData.formattingPrice(e.findElement(By.cssSelector("div[class='card__body']"))
-                        .findElement(By.cssSelector("div[class='card-price']"))
-                        .getText());
-
-                url = e.findElement(By.cssSelector("div[class='card__body']"))
-                        .findElement(By.cssSelector("a[class='card__title']"))
-                        .getAttribute("href");
-
-                imgUrl = e.findElement(By.cssSelector("div[class='card__image']"))
-                        .findElement(By.cssSelector("img[class='lazy']"))
-                        .getAttribute("src");
-
-                dataEquipment.save("tv_set", new ModelEquipment(title, price, url, imgUrl, storeId));
-            });
-        }
-
-        driver.quit();
-    }
 }

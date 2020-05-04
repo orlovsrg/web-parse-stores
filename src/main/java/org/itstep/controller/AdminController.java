@@ -9,27 +9,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(value = "/parse")
-public class ParseController {
-    private final Logger log = LoggerFactory.getLogger(ParseController.class);
+@RequestMapping(value = "/admin")
+public class AdminController {
+    private final Logger log = LoggerFactory.getLogger(AdminController.class);
 
     @Autowired
     private final ParserManager parserManager;
 
-    public ParseController(ParserManager parserManager) {
+    public AdminController(ParserManager parserManager) {
         this.parserManager = parserManager;
     }
 
     @GetMapping
     public String index(){
         log.info("In ParseController method index");
-        return "parse/index";
+        return "admin/index";
     }
 
-    @GetMapping(value = "parsing")
+    @GetMapping(value = "/parsing")
     public String parse(){
         log.info("In ParseController parse ");
         parserManager.parse();
-        return "parse/index";
+        return "redirect:/admin";
     }
 }

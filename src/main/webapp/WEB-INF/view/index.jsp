@@ -11,7 +11,7 @@
         <h1>Салэ ?<h2>салэ салэ ... !</h2></h1>
     </section>
     <nav id="main_nav">
-        <a href="<spring:url value="/parse" />">Parsing</a>
+        <a href="<spring:url value="/admin" />">Админ панель</a>
         <a href="#">What king this сайт</a>
         <a href="#">Войти</a>
         <a href="#">Выйти</a>

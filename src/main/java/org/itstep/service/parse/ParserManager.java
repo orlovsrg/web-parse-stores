@@ -15,6 +15,7 @@ public class ParserManager {
     }
 
     public void parse() {
-        foxtrotStoreService.parse(storeName);
+        new Thread(() -> foxtrotStoreService.parse(storeName)).start();
+//        foxtrotStoreService.parse(storeName);
     }
 }

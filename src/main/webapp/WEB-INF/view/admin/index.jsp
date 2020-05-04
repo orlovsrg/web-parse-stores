@@ -16,6 +16,6 @@
     </style>
 </head>
 <body>
-<a href="<spring:url value="/parse/parsing" />">Parsing</a>
+<a href="<spring:url value="/admin/parsing" />">Parsing</a>
 </body>
 </html>
