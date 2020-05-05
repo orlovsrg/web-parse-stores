@@ -5,13 +5,15 @@
     <title>Title</title>
     <style>
         a {
+            display: block;
+            align-items: center;
             text-decoration: none;
             width: 60px;
             height: 25px;
             border-radius: 5px;
             background: #292929;
             color: silver;
-            text-align: center;
+            /*text-align: center;*/
         }
     </style>
 </head>

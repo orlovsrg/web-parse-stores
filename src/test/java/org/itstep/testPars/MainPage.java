@@ -1,97 +1,92 @@
 package org.itstep.testPars;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.itstep.model.ModelEquipment;
+import org.itstep.service.parse.FormattingIncomingData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.List;
 
-
+@Component
 public class MainPage {
     private static final Logger log = LoggerFactory.getLogger(MainPage.class);
-    private static String comfyStartPage = "https://comfy.ua/";
+    private static String phoneLink = "https://comfy.ua/smartfon/";
+    private static final String pathVariable = "?p=";
 
 
-    public static void main(String[] args) throws IOException {
+    static FormattingIncomingData formattingIncomingData = new FormattingIncomingData();
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+
         String page = Paths.get("home.html").toString();
+
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
 
         try (FileWriter writer = new FileWriter(page)) {
 
-            driver.get(comfyStartPage);
-            Thread.sleep(2000);
-//            writer.write(driver.getPageSource());
-//            writer.flush();
 
-            String element = driver.findElement(By.cssSelector("a[href*='smartfon']")).getAttribute("href");
+            boolean hasNextPage = true;
+            int countCurrentPage = 6;
+            while (hasNextPage) {
 
-            log.info("link of smartphone {}", element);
-            driver.get("https://www.foxtrot.com.ua/ru/shop/mobilnye_telefony_smartfon.html");
-            Thread.sleep(10000);
-            writer.write(driver.getPageSource());
-            writer.flush();
-//            WebElement element = driver.findElement(By.cssSelector("a[href*='mobilnye_telefony_smartfon']"));
+                driver.get(phoneLink + pathVariable + countCurrentPage);
+                Thread.sleep(10000);
 
-//            foxtrotSmartphones = element.getAttribute("href");
-//            String paginationVariable = foxtrotSmartphones + "?page=";
+                List<WebElement> elementList = driver.findElements(By.cssSelector("div[data-gtm-location='catalog']"));
+                List<WebElement> listPages = driver.findElements(By.cssSelector("li[class='pager__number']"));
+                int countPages = listPages
+                        .stream()
+                        .map(e -> e.getText().replaceAll("\\D", ""))
+                        .filter(e -> e.length() > 0)
+                        .mapToInt(Integer::parseInt)
+                        .max()
+                        .getAsInt();
 
-//            driver.get(foxtrotSmartphones);
-//            Thread.sleep(3000);
-//            WebElement countPage = driver.findElement(By.cssSelector("div[class='listing__pagination']"));
-//            List<WebElement> elementsLi = countPage.findElements(By.cssSelector("li[data-page]"));
+                try {
+                    elementList.forEach(e -> {
+                        String title;
+                        int price;
+                        String url;
+                        String imgUrl;
+                        int storeId = 2;
 
-//            log.info("Count elements li = {}", elementsLi.size());
+                        title = e.findElement(By.cssSelector("a[class='product-item__name-link js-gtm-product-title']"))
+                                .getAttribute("title");
 
-//            int count = elementsLi.stream()
-//                    .map(e -> e.getAttribute("data-page"))
-//                    .map(e -> Integer.parseInt(e))
-//                    .max(Integer::compare)
-//                    .get();
-//
-//            System.out.println("count = " + count);
+                        price = formattingIncomingData.formattingPrice(e.findElement(By.cssSelector("span[class='price-value']"))
+                                .getText());
 
-//            for (int i = 1; i <= count; i++) {
-//                String paginationVariable = foxtrotSmartphones + "?page=" + i;
-//                driver.get(paginationVariable);
-//                Thread.sleep(5000);
-//                List<WebElement> elementList = driver.findElements(By.cssSelector("div[class='card js-card isTracked']"));
-//                log.info("Count phone {}", elementList.size());
-//                elementList.forEach(e -> {
-//                    String title;
-//                    String price;
-//                    String url;
-//                    String imgUrl;
-//
-//                    title = e.findElement(By.cssSelector("div[class='card__body']"))
-//                            .findElement(By.cssSelector("a[class='card__title']"))
-//                            .getAttribute("title");
-//
-//                    price = e.findElement(By.cssSelector("div[class='card__body']"))
-//                            .findElement(By.cssSelector("div[class='card-price']"))
-//                            .getText();
-//
-//                    url = e.findElement(By.cssSelector("div[class='card__body']"))
-//                            .findElement(By.cssSelector("a[class='card__title']"))
-//                            .getAttribute("href");
-//
-//                    imgUrl = e.findElement(By.cssSelector("div[class='card__image']"))
-//                            .findElement(By.cssSelector("img[class='lazy']"))
-//                            .getAttribute("src");
-//                    try {
-//                        writer.write("title= " + title + " | " + "price= " + price + " | " + "url= " + url + " | " + "urlImg =" + imgUrl);
-//                    } catch (IOException ex) {
-//                        ex.printStackTrace();
-//                    }
-//                });
-//            }
+                        url = e.findElement(By.cssSelector("a[class='product-item__name-link js-gtm-product-title']"))
+                                .getAttribute("href");
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+                        imgUrl = e.findElement(By.cssSelector("li[class='product-item-gallery__item slick-slide slick-current slick-active']>img"))
+                                .getAttribute("src");
+
+                        ModelEquipment modelEquipment = new ModelEquipment(title, price, url, imgUrl, storeId);
+
+                        log.info("Model techno: {}", modelEquipment);
+                    });
+                } catch (Exception ex) {
+                    log.error("Error: {}", ex.toString());
+                }
+
+                log.info("current page: {} max page: {}", countCurrentPage, countPages);
+                if (countCurrentPage > countPages) {
+                    hasNextPage = false;
+                } else {
+                    countCurrentPage++;
+                }
+            }
+
         } finally {
             driver.quit();
         }

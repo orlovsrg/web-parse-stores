@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 public class FormattingIncomingData {
 
     public int formattingPrice(String data){
+        if (data == null)
+            return 0;
         return Integer.parseInt(data.replaceAll("\\D", ""));
     }
 }

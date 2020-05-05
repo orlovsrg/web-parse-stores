@@ -67,4 +67,16 @@ public class ModelEquipment {
     public void setStoreId(int storeId) {
         this.storeId = storeId;
     }
+
+    @Override
+    public String toString() {
+        return "ModelEquipment{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", price=" + price +
+                ", url='" + url + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", storeId=" + storeId +
+                '}';
+    }
 }

@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -22,10 +21,10 @@ public class FoxtrotStoreService implements StoreService {
 
     private String urlParsingPageByType;
     private WebDriver driver;
-    private String whatParse;
+    private static String whatParse;
     private int storeId;
     private String selectorKeyProductType;
-    private final String variablePagination = "?page=";
+    private final String pathVariable = "?page=";
 
     @Autowired
     private final DataEquipment dataEquipment;
@@ -37,12 +36,12 @@ public class FoxtrotStoreService implements StoreService {
         this.formattingIncomingData = formattingIncomingData;
     }
 
-    public String getWhatParse() {
+    public static String getWhatParse() {
         return whatParse;
     }
 
     @Override
-    public void parse(String nameStore) {
+    public void startProcess(String nameStore) {
         whatParse = "Pre processing...";
 
         try {
@@ -59,9 +58,9 @@ public class FoxtrotStoreService implements StoreService {
             for (int i = 0; i < countSelectorKey; i++) {
                 selectorKeyProductType = selectorKeyList.get(i).getProductType();
                 urlParsingPageByType = selectorKeyList.get(i).getSelectorKey();
-                System.out.println("selectorKeyProductType = " + selectorKeyProductType);
-                System.out.println("urlParsingPageByType = " + urlParsingPageByType);
-                parsProduct(urlParsingPageByType, selectorKeyProductType);
+                log.info("selectorKeyProductType | {}", selectorKeyProductType);
+                log.info("urlParsingPageByType | {}", urlParsingPageByType);
+                pars(urlParsingPageByType, selectorKeyProductType);
             }
 
         } catch (InterruptedException e) {
@@ -70,7 +69,7 @@ public class FoxtrotStoreService implements StoreService {
     }
 
     @Override
-    public void parsProduct(String urlParsingTypePage, String productType) throws InterruptedException {
+    public void pars(String urlParsingTypePage, String productType) throws InterruptedException {
         whatParse = "Scanning " + productType;
 
         log.info("path smatrtfon {}" + urlParsingTypePage);
@@ -94,7 +93,7 @@ public class FoxtrotStoreService implements StoreService {
         // Test with a limit of 2 page. There is here should be variable "count".
         for (int i = 1; i <= 2; i++) {
 
-            driver.get(urlParsingTypePage + variablePagination + i);
+            driver.get(urlParsingTypePage + pathVariable + i);
 
             List<WebElement> elementList = driver.findElements(By.cssSelector("div[class='card js-card isTracked']"));
 
