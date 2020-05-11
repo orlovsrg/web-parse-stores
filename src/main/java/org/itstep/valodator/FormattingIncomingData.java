@@ -1,4 +1,4 @@
-package org.itstep.service.parse;
+package org.itstep.valodator;
 
 import org.springframework.stereotype.Component;
 
@@ -9,5 +9,11 @@ public class FormattingIncomingData {
         if (data == null)
             return 0;
         return Integer.parseInt(data.replaceAll("\\D", ""));
+    }
+
+    public String formattingTitle(String title){
+        if (title == null)
+            return "";
+        return title.replaceAll("\\(.*\\)", "");
     }
 }

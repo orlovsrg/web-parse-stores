@@ -68,3 +68,24 @@ create table tv_set
     constraint tv_set_store_fk
         foreign key (store_id) references store (id)
 );
+
+create table user_role(
+  id int auto_increment primary key,
+  role varchar(20) not null
+);
+
+insert into user_role(role) values ('ROLE_ADMIN'), ('ROLE_USER');
+
+create table user_table (
+    id int auto_increment primary key ,
+    name varchar(50) not null ,
+    birth_day date not null ,
+    login varchar(50) not null ,
+    password varchar(50) not null ,
+    phone_number int not null ,
+    email varchar(255) not null ,
+    role_id int not null ,
+    create_date timestamp,
+    constraint user_table_role_fk
+            foreign key (role_id) references user_role(id)
+);

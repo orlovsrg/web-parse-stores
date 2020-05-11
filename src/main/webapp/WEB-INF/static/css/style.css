@@ -1,0 +1,518 @@
+/* ===============================
+===      Глобальные стили      ===
+================================*/
+/* Google Fonts  */
+
+form span {
+    /*border:1px solid red !important;*/
+    color: red !important;
+}
+
+:root {
+    --Montserrat: 'Montserrat', sans-serif;
+    --Source-Sans-Pro: 'Source Sans Pro', sans-serif;
+    --Roboto: 'Roboto', sans-serif;
+    --Roboto-Slab: 'Roboto Slab', serif;
+    --Lora: 'Lora', serif;
+    --Comfortaa: 'Comfortaa', cursive;
+    --Russo-One: 'Russo One', sans-serif;
+    --Ruslan-Display: 'Ruslan Display', cursive;
+    --Open-Sans: 'Open Sans', sans-serif;
+    --Nunito: 'Nunito', sans-serif;
+}
+
+/* Color */
+:root {
+    --color-1: #efefef;
+    --color-2: #141414;
+    --color-3: #101010;
+    --color-4: #7d7d7d;
+    --color-5: #a6a6a6;
+    --color-6: #565656;
+    --color-7: #ffffff;
+    --color-8: #323232;
+    --color-9: #d84b35;
+    --color-10: #1cab46;
+    --color-11: #35487e;
+    --color-12: #253a79;
+    --color-13: #192175;
+    --color-14: #192175;
+    --color-15: #c8f060;
+    --color-16: #563126;
+    --color-17: rgba(202, 199, 199, 0.71);
+}
+
+:root {
+    --width: 940px;
+}
+
+/* Указываем box s
+izing */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Убираем внутренние отступы */
+ul[class],
+ol[class] {
+    padding: 0;
+    margin: 0;
+}
+
+/* Убираем внешние отступы */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+    margin: 0;
+}
+
+/* Выставляем основные настройки по-умолчанию для body */
+body {
+    min-height: 100vh;
+    scroll-behavior: smooth;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+}
+
+/* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
+ul[class],
+ol[class] {
+    list-style: none;
+}
+
+/* Элементы a, у которых нет класса, сбрасываем до дефолтных стилей */
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+/* Упрощаем работу с изображениями */
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* Указываем понятную периодичность в потоке данных у article*/
+article > * + * {
+    margin-top: 1em;
+}
+
+/* Наследуем шрифты для инпутов и кнопок */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* Плавность эффекта */
+* {
+     transition: all .2s ease-in-out;
+ }
+
+/** {*/
+/*    transition: all .5s ;*/
+/*}*/
+
+/* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+body {
+    background: var(--color-8);
+    font-family: var(--Montserrat);
+}
+
+.wrap {
+    max-width: var(--width);
+    margin: 0 auto;
+}
+
+/* ===============================
+===          Контент           ===
+================================*/
+.box {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+.box-main {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    width: 600px;
+    margin: 0 auto;
+}
+
+
+
+.item {
+    display: flex;
+    height: 450px;
+    margin: 5px;
+    flex-basis: 400px;
+    flex-grow: 1;
+    position: relative;
+}
+
+.item-main {
+    display: flex;
+    height: 550px;
+    margin: 5px;
+    flex-basis: 400px;
+    flex-grow: 1;
+    position: relative;
+}
+
+.info-inner {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.info-inner-main {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+
+.info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    height: 100px;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 30px;
+    background: var(--color-11);
+    position: absolute;
+    bottom: 0;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.info-main {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    height: 150px;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 40px;
+    background: var(--color-11);
+    position: absolute;
+    bottom: 0;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.img {
+    height: 350px;
+    width: 100%;
+    background: var(--color-7);
+    padding: 10px;
+}
+
+.img-main {
+    height: 100%;
+    width: 100%;
+    background: var(--color-7);
+    padding: 10px;
+}
+
+.img-main img {
+    object-fit: contain;
+    height: calc(100% - 150px);
+    width: 100%;
+}
+
+
+.info a {
+    color: var(--color-7);
+}
+
+.info-main a {
+    color: var(--color-7);
+}
+
+.small-item {
+    text-decoration: none;
+}
+
+
+.img img {
+    object-fit: contain;
+    height: calc(100% - 50px);
+    width: 100%;
+}
+
+/* ===============================
+===          Навигация         ===
+================================*/
+.top-nav {
+    height: 50px;
+    background: var(--color-3);
+    color: var(--color-7);
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 800;
+    margin: 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: var(--width);
+}
+
+.user {
+    cursor: pointer;
+    padding: 0 10px;
+    height: 50px;
+    line-height: 50px;
+}
+
+.dropbtn {
+    background-color: var(--color-3);
+    color: var(--color-7);
+    height: 50px;
+    width: 150px;
+    border: none;
+    font-size: 14px;
+    text-transform: uppercase;
+    outline: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--color-3);
+    min-width: 150px;
+    z-index: 1;
+
+}
+
+.dropdown-content a {
+    color: var(--color-7);
+    padding: 12px 10px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--color-6);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: var(--color-6);
+}
+
+.fa-folder {
+    position: absolute;
+    left: 10px;
+    font-size: 20px;
+}
+
+.fa-user  {
+    font-size: 20px;
+    letter-spacing: 7px;
+    position: relative;
+    left: 15px;
+
+}
+
+.fa-chevron-circle-left {
+    font-size: 20px;
+    letter-spacing: 7px;
+    position: relative;
+    left: 15px;
+
+}
+
+/*My point*/
+.lk-style {
+    padding-left: 10px;
+    text-decoration: none;
+    color: var(--color-7);
+}
+
+.lk-style:hover {
+    color: var(--color-17);
+}
+
+
+/* ===============================
+===          Логин             ===
+================================*/
+.form-wrap {
+    background-color: var(--color-7);
+    width: 320px;
+    margin: 3em auto;
+}
+
+.form-wrap .tabs {
+    overflow: hidden;
+}
+
+.form-wrap .tabs h3 {
+    float: left;
+    width: 50%;
+}
+
+.form-wrap .tabs h3 a {
+    padding: 0.5em 0;
+    text-align: center;
+    font-weight: 400;
+    background-color: var(--color-6);
+    display: block;
+    color: var(--color-7);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+.form-wrap .tabs h3 a.active {
+    background-color: var(--color-7);
+    color: var(--color-3);
+}
+
+.form-wrap .tabs-content {
+    padding: 1.5em;
+}
+
+.form-wrap .tabs-content div[id$="tab-content"] {
+    display: none;
+}
+
+.form-wrap .tabs-content .active {
+    display: block !important;
+}
+
+.form-wrap form .input {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    color: inherit;
+    font-family: inherit;
+    padding: .8em 0 10px .8em;
+    outline: 0;
+    display: inline-block;
+    margin: 0 0 .8em 0;
+    padding-right: 2em;
+    width: 100%;
+}
+
+.form-wrap form .button {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--color-8);
+    border: none;
+    color: var(--color-7);
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.form-wrap form .button:hover {
+    background-color: var(--color-6);
+}
+
+.form-wrap form .checkbox {
+    visibility: hidden;
+    padding: 20px;
+    margin: .5em 0 1.5em;
+}
+
+.form-wrap form .checkbox:checked + label:after {
+    filter: alpha(opacity=100);
+    opacity: 1;
+}
+
+.form-wrap form label[for] {
+    position: relative;
+    padding-left: 20px;
+    cursor: pointer;
+}
+
+.form-wrap form label[for]:before {
+    content: '';
+    position: absolute;
+    border: 1px solid var(--color-5);
+    width: 17px;
+    height: 17px;
+    top: 0px;
+    left: -14px;
+}
+
+.form-wrap form label[for]:after {
+    filter: alpha(opacity=0);
+    opacity: 0;
+    content: '';
+    position: absolute;
+    width: 9px;
+    height: 5px;
+    background-color: transparent;
+    top: 4px;
+    left: -10px;
+    border: 3px solid var(--color-8);
+    border-top: none;
+    border-right: none;
+    transform: rotate(-45deg);
+}
+
+.form-wrap .help-text {
+    margin-top: .6em;
+
+}
+
+.form-wrap .help-text p {
+    text-align: center;
+    font-size: 14px;
+
+}
+
+.form-wrap .help-text p a {
+    text-decoration: none;
+    color: var(--color-8);
+    font-size: 14px;
+    font-weight: 900;
+}
+
+@media only screen and (max-width: 500px) {
+    .form-wrap {
+        width: 310px;
+    }
+}
+

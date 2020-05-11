@@ -1,11 +1,14 @@
 package org.itstep.data.parse;
 
 import org.itstep.model.ModelEquipment;
-import org.itstep.model.SelectorKey;
+import org.itstep.model.LinkProductType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -15,7 +18,7 @@ public class DataEquipment {
     private final String GET_STORE_ID = "SELECT id FROM store WHERE name = ?";
     private final String SAVE_EQUIPMENT_START = "INSERT INTO ";
     private final String SAVE_EQUIPMENT_END = "(title, price, url, img_url, store_id) values (?,?,?,?,?)";
-    private final String GET_SELECTOR_KEY = "SELECT product_type, selector_key FROM selector_key WHERE store_id = ?";
+    private final String GET_SELECTOR_KEY = "SELECT product_type, link FROM link_product WHERE store_id = ?";
 
     @Autowired
     private final JdbcTemplate jdbcTemplate;
@@ -31,21 +34,23 @@ public class DataEquipment {
     }
 
     public int storeId(String storeName) {
-        return jdbcTemplate.query(GET_STORE_ID,
-                ps -> ps.setString(1, storeName),
-                rs -> {
-                    if (rs.next())
-                        return rs.getInt(1);
-                    return null;
-                });
+//        return jdbcTemplate.query(GET_STORE_ID,
+//                ps -> ps.setString(1, storeName),
+//                rs -> {
+//                    if (rs.next())
+//                        return rs.getInt(1);
+//                    return null;
+//                });
+
+        return jdbcTemplate.queryForObject(GET_STORE_ID, Integer.class, storeName);
     }
 
-    public List<SelectorKey> getSelectorKey(String storeName) {
+    public List<LinkProductType> getSelectorKey(String storeName) {
 
         int storeId = storeId(storeName);
         return jdbcTemplate.query(GET_SELECTOR_KEY,
                 ps -> ps.setInt(1, storeId),
-                (rs, rowNum) -> new SelectorKey(storeId, rs.getString("product_type"), rs.getString("selector_key")));
+                (rs, rowNum) -> new LinkProductType(storeId, rs.getString("product_type"), rs.getString("link")));
 
 
     }
@@ -61,6 +66,10 @@ public class DataEquipment {
             return ps;
         });
     }
+
+    // Show data from DB
+
+
 
 
 }

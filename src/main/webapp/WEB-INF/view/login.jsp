@@ -7,8 +7,8 @@
 <!-- HEAD-->
 <%@include file="building/head.jsp" %>
 
-<!-- TITLE-->
-<%@include file="building/title.jsp" %>
+<!-- FORM-->
+<%@include file="building/form.jsp" %>
 
 <!-- BOTTOM-->
 <%@include file="building/bottom.jsp" %>

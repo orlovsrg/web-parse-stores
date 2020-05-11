@@ -2,7 +2,7 @@ package org.itstep.testPars;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.itstep.model.ModelEquipment;
-import org.itstep.service.parse.FormattingIncomingData;
+import org.itstep.valodator.FormattingIncomingData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

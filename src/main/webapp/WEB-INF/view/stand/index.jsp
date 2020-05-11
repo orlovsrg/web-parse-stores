@@ -2,14 +2,14 @@
 <%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" language="java" %>
 
 <!-- TOP-->
-<%@include file="building/top.jsp" %>
+<%@include file="../building/top.jsp" %>
 
 <!-- HEAD-->
-<%@include file="building/head.jsp" %>
+<%@include file="../building/head.jsp" %>
 
 <!-- TITLE-->
-<%@include file="building/title.jsp" %>
+<%@include file="../building/titleType.jsp" %>
 
 <!-- BOTTOM-->
-<%@include file="building/bottom.jsp" %>
+<%@include file="../building/bottom.jsp" %>
 
