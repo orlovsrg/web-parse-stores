@@ -1,6 +1,7 @@
 package org.itstep.data.parse;
 
 import org.itstep.model.ModelEquipment;
+import org.itstep.model.Store;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -50,5 +51,12 @@ class DataEquipmentTest {
         modelEquipmentListStoreIdTwo.forEach(System.out::println);
         assertTrue(modelEquipmentListStoreIdOne.size() > 0
                 && modelEquipmentListStoreIdTwo.size() > 0);
+    }
+
+    @Test
+    void getAllStores() {
+       List<Store> storeList = dataEquipment.getAllStores();
+       storeList.forEach(System.out::println);
+       assertTrue(storeList.size() > 0);
     }
 }

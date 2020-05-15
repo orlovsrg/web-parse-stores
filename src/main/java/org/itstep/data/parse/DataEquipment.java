@@ -3,6 +3,7 @@ package org.itstep.data.parse;
 import org.h2.engine.Mode;
 import org.itstep.model.ModelEquipment;
 import org.itstep.model.LinkProductType;
+import org.itstep.model.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
@@ -69,12 +70,16 @@ public class DataEquipment {
     // Show data from DB
 
 
-    private final String GET_ALL_STORE = "select name from store";
+    private final String GET_ALL_STORE = "select * from store";
     private final String GET_ALL_PRODUCT_START = "select * from ";
     private final String GET_ALL_PRODUCT_END = " where store_id = ?";
 
-    public List<String> getAllStores() {
-        return jdbcTemplate.queryForList(GET_ALL_STORE, String.class);
+    public List<Store> getAllStores() {
+        return jdbcTemplate.query(GET_ALL_STORE, (rs, rowNum) -> new Store(
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("store_url")
+        ));
     }
 
     public List<ModelEquipment> getProductsByType(String typeProduct, int storeId) {
