@@ -2,6 +2,7 @@ package org.itstep.model;
 
 import java.time.LocalDate;
 
+
 public class User {
 
     private int id;

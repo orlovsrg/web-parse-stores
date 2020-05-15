@@ -1,12 +1,20 @@
 package org.itstep.dto;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.Collectors;
 
-public class UserDto {
+@Component
+public class UserDto implements UserDetails {
 
     private int id;
     @Size(min = 2, max = 20)
@@ -23,8 +31,8 @@ public class UserDto {
     private String secondPassword;
     @Email
     private String email;
-    private String role;
-
+    private Set<String> role;
+    private Set<Integer> roleId;
     private String checkLogin;
     private String checkPassword;
 
@@ -88,8 +96,48 @@ public class UserDto {
         this.phoneNumber = phoneNumber;
     }
 
+    public Set<Integer> getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Set<Integer> roleId) {
+        this.roleId = roleId;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        String roles = role.toString().replaceAll("[\\[\\]]", "");
+        System.out.println("ROLES ---------------------> " + roles);
+        return  AuthorityUtils.commaSeparatedStringToAuthorityList(roles);
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return login;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setPassword(String password) {
@@ -112,11 +160,12 @@ public class UserDto {
         this.email = email;
     }
 
-    public String getRole() {
+
+    public Set<String> getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Set<String> role) {
         this.role = role;
     }
 

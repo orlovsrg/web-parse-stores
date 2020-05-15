@@ -1,6 +1,8 @@
 package org.itstep.model;
 
 
+import java.util.Objects;
+
 public class ModelEquipment {
     private int id;
     private String title;
@@ -78,5 +80,18 @@ public class ModelEquipment {
                 ", imgUrl='" + imgUrl + '\'' +
                 ", storeId=" + storeId +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ModelEquipment that = (ModelEquipment) o;
+        return title.equals(that.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title);
     }
 }

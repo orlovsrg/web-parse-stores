@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
-
 import java.time.LocalDate;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringJUnitWebConfig(locations = {"classpath:spring-db.xml", "classpath:spring-mvc.xml"})
+@SpringJUnitWebConfig(locations = {"classpath:spring-db.xml", "classpath:spring-mvc.xml", "classpath:spring-security.xml"})
 class DataUserTest {
 
     private final Logger log = LoggerFactory.getLogger(DataEquipmentTest.class);
@@ -54,5 +54,18 @@ class DataUserTest {
     @Test
     void hasLogin() {
         assertTrue(dataUser.hasLogin("sdfgdsfg"));
+    }
+
+    @Test
+    void addRole() {
+        dataUser.addRole(1);
+    }
+
+    @Test
+    void getSetRole() {
+        Set<String> roleSet = dataUser.getSetRole(1);
+        roleSet.forEach(System.out::println);
+        assertEquals(true, roleSet.contains("ROLE_USER"));
+        assertEquals(true, roleSet.contains("ROLE_ADMIN"));
     }
 }

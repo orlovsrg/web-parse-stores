@@ -1,5 +1,6 @@
 package org.itstep.data.parse;
 
+import org.itstep.model.ModelEquipment;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,13 +14,14 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 //@DirtiesContext
 //@ExtendWith(SpringExtension.class)
 //@WebAppConfiguration
-@SpringJUnitWebConfig(locations = {"classpath:spring-db.xml", "classpath:spring-mvc.xml"})
+@SpringJUnitWebConfig(locations = {"classpath:spring-db.xml", "classpath:spring-mvc.xml", "classpath:spring-security.xml"})
 class DataEquipmentTest {
     private final Logger log = LoggerFactory.getLogger(DataEquipmentTest.class);
 
@@ -34,4 +36,19 @@ class DataEquipmentTest {
         assertEquals(0, dataEquipment.storeId("foxtrot"));
     }
 
+    @Test
+    void getAllStore() {
+        assertTrue(dataEquipment.getAllStores().contains("foxtrot"));
+        assertTrue(dataEquipment.getAllStores().contains("comfy"));
+    }
+
+    @Test
+    void getProductsByType() {
+        List<ModelEquipment> modelEquipmentListStoreIdOne = dataEquipment.getProductsByType("phone", 1);
+        List<ModelEquipment> modelEquipmentListStoreIdTwo = dataEquipment.getProductsByType("phone", 2);
+        modelEquipmentListStoreIdOne.forEach(System.out::println);
+        modelEquipmentListStoreIdTwo.forEach(System.out::println);
+        assertTrue(modelEquipmentListStoreIdOne.size() > 0
+                && modelEquipmentListStoreIdTwo.size() > 0);
+    }
 }
