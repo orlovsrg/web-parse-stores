@@ -2,8 +2,8 @@ package org.itstep.service.parse;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.itstep.data.parse.DataEquipment;
-import org.itstep.model.ModelEquipment;
 import org.itstep.model.LinkProductType;
+import org.itstep.model.ModelEquipment;
 import org.itstep.valodator.FormattingIncomingData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -18,14 +18,15 @@ import java.util.List;
 
 @Service
 public class ComfyStoreService implements StoreService {
+
     private static final Logger log = LoggerFactory.getLogger(ComfyStoreService.class);
 
-    private String urlParsingPageByType;
-    private WebDriver driver;
     private static String whatParse;
     private int storeId;
-    private String productType;
     private final String pathVariable = "?p=";
+    private String productType;
+    private String urlParsingPageByType;
+    private WebDriver driver;
 
     @Autowired
     private final DataEquipment dataEquipment;
@@ -40,10 +41,12 @@ public class ComfyStoreService implements StoreService {
     @Override
     public void startProcess(String nameStore) {
         whatParse = "Pre processing...";
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
 
         try {
             storeId = dataEquipment.storeId(nameStore);
-            WebDriverManager.chromedriver().setup();
+
             List<LinkProductType> linkProductTypeList = dataEquipment.getSelectorKey(nameStore);
 
             for (LinkProductType linkProductType : linkProductTypeList) {
@@ -59,19 +62,19 @@ public class ComfyStoreService implements StoreService {
                 log.info("urlParsingPageByType | {}", urlParsingPageByType);
                 pars(urlParsingPageByType, productType);
             }
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            driver.quit();
+        } catch (Exception e) {
+            log.error("error");
         }
     }
 
     @Override
-    public void pars(String urlParsingTypePage, String productType) throws InterruptedException {
+    public void pars(String urlParsingTypePage, String productType) {
 
         whatParse = "Scanning " + productType;
 
         //This driver create here for parsing single product
-        driver = new ChromeDriver();
+
 
 
         boolean hasNextPage = true;
@@ -122,7 +125,7 @@ public class ComfyStoreService implements StoreService {
                 }
 
 //                log.info("current page: {} max page: {}", countCurrentPage, countPages);
-                log.info("current page: {}" , countCurrentPage);
+                log.info("current page: {}", countCurrentPage);
                 if (countCurrentPage == 5) {
                     hasNextPage = false;
                 } else {
@@ -132,6 +135,5 @@ public class ComfyStoreService implements StoreService {
                 log.error("Error: {}", ex);
             }
         }
-        driver.quit();
     }
 }

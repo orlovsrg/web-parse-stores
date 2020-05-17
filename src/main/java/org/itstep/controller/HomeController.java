@@ -63,7 +63,7 @@ public class HomeController {
             return "login";
         }
         model.addAttribute("userDto", dataUser.getOne(id));
-        return "redirect:/user/" + id;
+        return "redirect:/user";
     }
 
     @PostMapping(value = "registration")
@@ -81,7 +81,7 @@ public class HomeController {
             userDto.setPassword(bCryptPasswordEncoder.encode(encoderPassword));
             int id = dataUser.save(userDto);
             model.addAttribute("user", dataUser.getOne(id));
-            return "redirect:/user/" + id;
+            return "redirect:/user";
         }
     }
 

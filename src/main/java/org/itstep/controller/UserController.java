@@ -1,9 +1,12 @@
 package org.itstep.controller;
 
 import org.itstep.data.parse.DataUser;
+import org.itstep.dto.UserDto;
+import org.itstep.service.SubscriptionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +18,19 @@ public class UserController {
 
     @Autowired
     private final DataUser dataUser;
+    @Autowired
+    private final SubscriptionService subscriptionService;
 
-    public UserController(DataUser dataUser) {
+    public UserController(DataUser dataUser, SubscriptionService subscriptionService) {
         this.dataUser = dataUser;
+        this.subscriptionService = subscriptionService;
     }
 
-    @GetMapping("/{id}")
-    public String user(@PathVariable int id, Model model) {
-        model.addAttribute("user", dataUser.getOne(id));
+    @GetMapping()
+    public String user(Model model) {
+        UserDto userDto = (UserDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println("PRINCIPAL: " + userDto);
+        model.addAttribute("product", subscriptionService.getAllSubscriptionProduct(userDto.getId()));
         return "user/index";
     }
 

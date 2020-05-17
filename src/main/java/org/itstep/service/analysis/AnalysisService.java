@@ -7,9 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,17 +22,20 @@ public class AnalysisService {
         this.dataEquipment = dataEquipment;
     }
 
+    public List<Store> getStores() {
+        return dataEquipment.getAllStores();
+    }
 
-    public Map<Store, List<ModelEquipment>> getProductsBy(String typeProduct){
-        Map<Store, List<ModelEquipment>> map = new HashMap<>();
-        List<Store> storeList = dataEquipment.getAllStores();
-        log.info("Stores: {}", storeList);
 
-        storeList.forEach(store ->
-                map.put(store, dataEquipment.getProductsByType(typeProduct, store.getId()))
-        );
+    public Map<String, List<ModelEquipment>> getProductsByType(String typeProduct) {
+        Map<String, List<ModelEquipment>> map = new LinkedHashMap<>();
+        log.info("Stores: {}", "");
+        List<String> listTitleProduct = dataEquipment.getAllTitle(typeProduct);
+        List<ModelEquipment> listModel = dataEquipment.getProductsByType(typeProduct);
 
-        map.forEach((k, v) -> System.out.println(k + ": " + v));
+        listTitleProduct.stream().limit(5).forEach(n -> {
+            map.put(n, dataEquipment.getProductByName(typeProduct, n));
+        });
 
         return map;
     }

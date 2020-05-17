@@ -27,7 +27,7 @@ public class DataEquipment {
     private final String SAVE_EQUIPMENT_START = "INSERT INTO ";
     private final String SAVE_EQUIPMENT_END = "(title, price, url, img_url, store_id) values (?,?,?,?,?)";
     private final String GET_SELECTOR_KEY = "SELECT product_type, link FROM link_product WHERE store_id = ?";
-
+    private final String GET_ALL_STORE_BY_NAME = "SELECT * FROM store WHERE name = ?";
 
     @Autowired
     private final JdbcTemplate jdbcTemplate;
@@ -44,6 +44,16 @@ public class DataEquipment {
 
     public int storeId(String storeName) {
         return jdbcTemplate.queryForObject(GET_STORE_ID, Integer.class, storeName);
+    }
+
+    public Store getStore(String nameStore) {
+        return jdbcTemplate.queryForObject(GET_ALL_STORE_BY_NAME, new RowMapper<Store>() {
+            @Override
+            public Store mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+                return null;
+            }
+        }, nameStore);
     }
 
     public List<LinkProductType> getSelectorKey(String storeName) {
@@ -71,8 +81,22 @@ public class DataEquipment {
 
 
     private final String GET_ALL_STORE = "select * from store";
-    private final String GET_ALL_PRODUCT_START = "select * from ";
-    private final String GET_ALL_PRODUCT_END = " where store_id = ?";
+    private final String GET_ALL_PRODUCT_BEGIN = "select * from ";
+    private final String GET_ALL_TITLE_PRODUCT_START = "select title, count(*) c from ";
+    private final String GET_ALL_TITLE_PRODUCT_END = " group by title order by c desc";
+    private final String GET_PRODUCT_BY_NAME_START = "select * from ";
+    private final String GET_PRODUCT_BY_NAME_END = " where title = ?";
+    private final String GET_PRODUCT_BY_ID_START = "select * from ";
+    private final String GET_PRODUCT_BY_ID_END = " where id = ?";
+
+    public List<String> getAllTitle(String typeProduct) {
+        return jdbcTemplate.query(GET_ALL_TITLE_PRODUCT_START + typeProduct + GET_ALL_TITLE_PRODUCT_END, new RowMapper<String>() {
+            @Override
+            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return rs.getString("title");
+            }
+        });
+    }
 
     public List<Store> getAllStores() {
         return jdbcTemplate.query(GET_ALL_STORE, (rs, rowNum) -> new Store(
@@ -82,19 +106,46 @@ public class DataEquipment {
         ));
     }
 
-    public List<ModelEquipment> getProductsByType(String typeProduct, int storeId) {
-        return jdbcTemplate.query(
-                GET_ALL_PRODUCT_START + typeProduct + GET_ALL_PRODUCT_END,
-                new Object[]{storeId},
+    public List<ModelEquipment> getProductByName(String type, String nameProduct) {
+        return jdbcTemplate.query(GET_PRODUCT_BY_NAME_START + type + GET_PRODUCT_BY_NAME_END,
                 (rs, rowNum) -> {
-                    ModelEquipment modelEquipment1 = new ModelEquipment();
-                    modelEquipment1.setId(rs.getInt("id"));
-                    modelEquipment1.setTitle(rs.getString("title"));
-                    modelEquipment1.setPrice(rs.getInt("price"));
-                    modelEquipment1.setImgUrl(rs.getString("img_url"));
-                    modelEquipment1.setUrl(rs.getString("url"));
-                    modelEquipment1.setStoreId(rs.getInt("store_id"));
-                    return modelEquipment1;
+                    ModelEquipment modelEquipment = new ModelEquipment();
+                    modelEquipment.setId(rs.getInt("id"));
+                    modelEquipment.setTitle(rs.getString("title"));
+                    modelEquipment.setPrice(rs.getInt("price"));
+                    modelEquipment.setImgUrl(rs.getString("img_url"));
+                    modelEquipment.setUrl(rs.getString("url"));
+                    modelEquipment.setStoreId(rs.getInt("store_id"));
+                    return modelEquipment;
+                }, nameProduct);
+    }
+
+    public ModelEquipment getProductById(String type, int productId) {
+        return jdbcTemplate.queryForObject(GET_PRODUCT_BY_ID_START + type + GET_PRODUCT_BY_ID_END,
+                (rs, rowNum) -> {
+                    ModelEquipment modelEquipment = new ModelEquipment();
+                    modelEquipment.setId(rs.getInt("id"));
+                    modelEquipment.setTitle(rs.getString("title"));
+                    modelEquipment.setPrice(rs.getInt("price"));
+                    modelEquipment.setImgUrl(rs.getString("img_url"));
+                    modelEquipment.setUrl(rs.getString("url"));
+                    modelEquipment.setStoreId(rs.getInt("store_id"));
+                    return modelEquipment;
+                }, productId);
+    }
+
+    public List<ModelEquipment> getProductsByType(String typeProduct) {
+        return jdbcTemplate.query(
+                GET_ALL_PRODUCT_BEGIN + typeProduct,
+                (rs, rowNum) -> {
+                    ModelEquipment modelEquipment = new ModelEquipment();
+                    modelEquipment.setId(rs.getInt("id"));
+                    modelEquipment.setTitle(rs.getString("title"));
+                    modelEquipment.setPrice(rs.getInt("price"));
+                    modelEquipment.setImgUrl(rs.getString("img_url"));
+                    modelEquipment.setUrl(rs.getString("url"));
+                    modelEquipment.setStoreId(rs.getInt("store_id"));
+                    return modelEquipment;
                 });
 
     }

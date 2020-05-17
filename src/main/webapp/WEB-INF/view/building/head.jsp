@@ -16,16 +16,23 @@
             <a href="<spring:url value="/stand" />/tv_set" class="lk-style">Телевизоры</a>
         </div>
     </div>
+    <sec:authorize access="isAuthenticated()" var="isUser"/>
+
 
     <div class="user">
         <i class="fa fa-chevron-circle-left"></i>
         <a href="<spring:url value="/"/>" class="lk-style">
             Домой
         </a>
-        <sec:authorize access="isAuthenticated()" var="isUser"/>
+
         <c:choose>
             <c:when test="${isUser}">
-                <span><sec:authentication property="name"/></span>
+                <i class="fa fa-address-card"></i>
+
+                <a href="<spring:url value="/user"/>" class="lk-style">
+
+                    Кабинет: <span id="user-name"><sec:authentication property="name"/></span>
+                </a>
                 <i class="fa fa-user"></i>
 
                 <a id="logout" class="lk-style">

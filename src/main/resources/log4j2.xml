@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="INFO">
+<Configuration status="DEBUG">
     <Appenders>
 
         <Console name="console" target="SYSTEM_OUT">
@@ -27,7 +27,7 @@
             <AppenderRef ref="console"/>
         </Logger>
 
-                <Logger name="org.springframework.security" level="INFO" additivity="false">
+                <Logger name="org.springframework.security" level="DEBUG" additivity="false">
                     <AppenderRef ref="console" />
                 </Logger>
         <Root level="WARN" additivity="false">

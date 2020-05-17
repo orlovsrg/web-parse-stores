@@ -45,8 +45,8 @@ class DataEquipmentTest {
 
     @Test
     void getProductsByType() {
-        List<ModelEquipment> modelEquipmentListStoreIdOne = dataEquipment.getProductsByType("phone", 1);
-        List<ModelEquipment> modelEquipmentListStoreIdTwo = dataEquipment.getProductsByType("phone", 2);
+        List<ModelEquipment> modelEquipmentListStoreIdOne = dataEquipment.getProductsByType("phone");
+        List<ModelEquipment> modelEquipmentListStoreIdTwo = dataEquipment.getProductsByType("phone");
         modelEquipmentListStoreIdOne.forEach(System.out::println);
         modelEquipmentListStoreIdTwo.forEach(System.out::println);
         assertTrue(modelEquipmentListStoreIdOne.size() > 0

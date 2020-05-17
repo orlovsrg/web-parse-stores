@@ -14,6 +14,6 @@ public class FormattingIncomingData {
     public String formattingTitle(String title){
         if (title == null)
             return "";
-        return title.replaceAll("\\(.*\\)", "");
+        return title.replaceAll("\\(.*?\\)", "");
     }
 }
