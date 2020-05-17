@@ -1,26 +1,24 @@
 package org.itstep.data.parse;
 
-import org.h2.engine.Mode;
-import org.itstep.model.ModelEquipment;
 import org.itstep.model.LinkProductType;
+import org.itstep.model.ModelEquipment;
 import org.itstep.model.Store;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.io.InputStream;
-import java.io.Reader;
-import java.math.BigDecimal;
-import java.net.URL;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class DataEquipment {
+    private final Logger log = LoggerFactory.getLogger(DataEquipment.class);
 
     private final String GET_STORE_URL = "SELECT store_url FROM store WHERE name = ?";
     private final String GET_STORE_ID = "SELECT id FROM store WHERE name = ?";
@@ -77,6 +75,22 @@ public class DataEquipment {
         });
     }
 
+
+    private final String UPDATE_PRODUCT_START = "update ";
+    private final String UPDATE_PRODUCT_END = " set price = ? where id = ?";
+    private final String SAVE_OLD_PRODUCT = "insert into old_data_product(title, price, store_id, product_type) values (?,?,?,?)";
+
+
+
+    public void saveOldProduct(String productType, ModelEquipment modelEquipment){
+        jdbcTemplate.update(SAVE_OLD_PRODUCT, modelEquipment.getTitle(), modelEquipment.getPrice(), modelEquipment.getStoreId(), productType);
+    }
+
+    public void update(String productType, ModelEquipment modelEquipment){
+        log.error("MODEL IN TO update: {}", modelEquipment);
+        jdbcTemplate.update(UPDATE_PRODUCT_START + productType + UPDATE_PRODUCT_END, modelEquipment.getPrice(), modelEquipment.getId());
+    }
+
     // Show data from DB
 
 
@@ -107,6 +121,7 @@ public class DataEquipment {
     }
 
     public List<ModelEquipment> getProductByName(String type, String nameProduct) {
+        log.warn("DATA getProductByName:{}");
         return jdbcTemplate.query(GET_PRODUCT_BY_NAME_START + type + GET_PRODUCT_BY_NAME_END,
                 (rs, rowNum) -> {
                     ModelEquipment modelEquipment = new ModelEquipment();
@@ -149,4 +164,22 @@ public class DataEquipment {
                 });
 
     }
+
+    // price change analysis
+
+    private final String HAS_PRODUCT_START = "select id from ";
+    private final String HAS_PRODUCT_END = " where title = ? and store_id = ?";
+    private final String CHECK_PRICE_PRODUCT_START = "select price from ";
+    private final String CHECK_PRICE_PRODUCT_END = " where title = ? and store_id = ?";
+
+    public boolean hasProduct(String productType, ModelEquipment modelEquipment) {
+        return jdbcTemplate.queryForObject(HAS_PRODUCT_START + productType + HAS_PRODUCT_END, Integer.class, modelEquipment.getTitle(), modelEquipment.getStoreId()) > 0;
+    }
+
+    public boolean checkPriceProduct(String typeProduct, ModelEquipment modelEquipment){
+        return jdbcTemplate.queryForObject(CHECK_PRICE_PRODUCT_START + typeProduct + CHECK_PRICE_PRODUCT_END,
+                Integer.class,
+                modelEquipment.getTitle(), modelEquipment.getStoreId()) == modelEquipment.getPrice();
+    }
+
 }

@@ -55,8 +55,53 @@ class DataEquipmentTest {
 
     @Test
     void getAllStores() {
-       List<Store> storeList = dataEquipment.getAllStores();
-       storeList.forEach(System.out::println);
-       assertTrue(storeList.size() > 0);
+        List<Store> storeList = dataEquipment.getAllStores();
+        storeList.forEach(System.out::println);
+        assertTrue(storeList.size() > 0);
+    }
+
+    @Test
+    void hasProduct() {
+        ModelEquipment modelEquipment = new ModelEquipment();
+        modelEquipment.setTitle("Смартфон SAMSUNG Galaxy A51 4/64 Gb Dual Sim Black");
+        modelEquipment.setStoreId(1);
+        boolean b = dataEquipment.hasProduct("phone", modelEquipment);
+        System.out.println("b: " + b);
+        assertTrue(b);
+        modelEquipment.setTitle("not this title");
+        modelEquipment.setStoreId(1);
+        b = dataEquipment.hasProduct("phone", modelEquipment);
+        assertFalse(b);
+    }
+
+    @Test
+    void checkPriceProduct() {
+        ModelEquipment modelEquipment = new ModelEquipment();
+        modelEquipment.setTitle("Смартфон SAMSUNG Galaxy A51 4/64 Gb Dual Sim Black");
+        modelEquipment.setStoreId(1);
+        modelEquipment.setPrice(7499);
+        boolean b = dataEquipment.checkPriceProduct("phone", modelEquipment);
+        System.out.println("b true = " + b);
+        assertTrue(b);
+        modelEquipment.setPrice(8000);
+        b = dataEquipment.checkPriceProduct("phone", modelEquipment);
+        System.out.println("b false = " + b);
+        assertFalse(b);
+
+    }
+
+    @Test
+    void update() {
+        ModelEquipment modelEquipment = new ModelEquipment();
+        modelEquipment.setId(4594);
+        modelEquipment.setTitle("Смартфон SAMSUNG Galaxy A51 4/64 Gb Dual Sim Black");
+        modelEquipment.setStoreId(1);
+        modelEquipment.setPrice(7);
+        dataEquipment.update("phone", modelEquipment);
+        boolean b = dataEquipment.checkPriceProduct("phone", modelEquipment);
+        assertTrue(b);
+        modelEquipment.setPrice(10);
+        b = dataEquipment.checkPriceProduct("phone", modelEquipment);
+        assertFalse(b);
     }
 }

@@ -4,6 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.itstep.data.parse.DataEquipment;
 import org.itstep.model.LinkProductType;
 import org.itstep.model.ModelEquipment;
+import org.itstep.service.analysis.AnalysisService;
 import org.itstep.valodator.FormattingIncomingData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -33,10 +34,13 @@ public class FoxtrotStoreService implements StoreService {
     private final DataEquipment dataEquipment;
     @Autowired
     private final FormattingIncomingData formattingIncomingData;
+    @Autowired
+    private final AnalysisService analysisService;
 
-    public FoxtrotStoreService(DataEquipment dataEquipment, FormattingIncomingData formattingIncomingData) {
+    public FoxtrotStoreService(DataEquipment dataEquipment, FormattingIncomingData formattingIncomingData, AnalysisService analysisService) {
         this.dataEquipment = dataEquipment;
         this.formattingIncomingData = formattingIncomingData;
+        this.analysisService = analysisService;
     }
 
     public static String getWhatParse() {
@@ -133,7 +137,8 @@ public class FoxtrotStoreService implements StoreService {
                                 .findElement(By.cssSelector("img[class='lazy']"))
                                 .getAttribute("src");
 
-                        dataEquipment.save(productType, new ModelEquipment(title, price, url, imgUrl, storeId));
+                        analysisService.checkProduct(productType,  new ModelEquipment(title, price, url, imgUrl, storeId));
+//                        dataEquipment.save(productType, new ModelEquipment(title, price, url, imgUrl, storeId));
                     });
                 } catch (Exception ex) {
                     log.error("Error: {}", ex);

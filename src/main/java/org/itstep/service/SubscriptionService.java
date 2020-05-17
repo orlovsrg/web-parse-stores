@@ -26,14 +26,18 @@ public class SubscriptionService {
         return dataSubscription.getUserSubscription(userId);
     }
 
-    public void saveSubscription(Subscription subscription){
+    public void saveSubscription(Subscription subscription) {
         dataSubscription.addSubscription(subscription);
     }
 
-    public List<ModelEquipment> getAllSubscriptionProduct(int userId){
+    public List<ModelEquipment> getAllSubscriptionProduct(int userId) {
         List<Subscription> subscriptionList = getAllSubscriptionByUserId(userId);
         List<ModelEquipment> modelEquipmentList = new ArrayList<>();
         subscriptionList.forEach(s -> modelEquipmentList.add(dataEquipment.getProductById(s.getProductType(), s.getProductId())));
         return modelEquipmentList;
+    }
+
+    public void sendMessage() {
+        System.out.println("SEND MESSAGE");
     }
 }

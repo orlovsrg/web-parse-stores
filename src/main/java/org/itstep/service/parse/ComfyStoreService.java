@@ -4,6 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.itstep.data.parse.DataEquipment;
 import org.itstep.model.LinkProductType;
 import org.itstep.model.ModelEquipment;
+import org.itstep.service.analysis.AnalysisService;
 import org.itstep.valodator.FormattingIncomingData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -32,10 +33,13 @@ public class ComfyStoreService implements StoreService {
     private final DataEquipment dataEquipment;
     @Autowired
     private final FormattingIncomingData formattingIncomingData;
+    @Autowired
+    private final AnalysisService analysisService;
 
-    public ComfyStoreService(DataEquipment dataEquipment, FormattingIncomingData formattingIncomingData) {
+    public ComfyStoreService(DataEquipment dataEquipment, FormattingIncomingData formattingIncomingData, AnalysisService analysisService) {
         this.dataEquipment = dataEquipment;
         this.formattingIncomingData = formattingIncomingData;
+        this.analysisService = analysisService;
     }
 
     @Override
@@ -118,6 +122,8 @@ public class ComfyStoreService implements StoreService {
                         log.info("Product: {}", modelEquipment);
 
                         dataEquipment.save(productType, modelEquipment);
+                        analysisService.checkProduct(productType, modelEquipment);
+
 
                     });
                 } catch (Exception ex) {

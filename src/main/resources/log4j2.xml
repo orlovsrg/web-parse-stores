@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="DEBUG">
+<Configuration status="INFO">
     <Appenders>
 
         <Console name="console" target="SYSTEM_OUT">
@@ -15,8 +15,7 @@
             </PatternLayout>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
-                <SizeBasedTriggeringPolicy
-                        size="250 MB"/>
+                <SizeBasedTriggeringPolicy size="250 MB"/>
             </Policies>
         </RollingFile>
 
@@ -27,12 +26,21 @@
             <AppenderRef ref="console"/>
         </Logger>
 
-                <Logger name="org.springframework.security" level="DEBUG" additivity="false">
-                    <AppenderRef ref="console" />
-                </Logger>
+        <Logger name="org.springframework.security" level="INFO" additivity="false">
+            <AppenderRef ref="console"/>
+        </Logger>
+
+        <Logger name="org.itstep.service.analysis" level="WARN">
+            <AppenderRef ref="rollingFile" />
+        </Logger>
+
+        <Logger name="org.itstep.service.analysis" level="WARN">
+            <AppenderRef ref="console" />
+        </Logger>
+
         <Root level="WARN" additivity="false">
             <AppenderRef ref="console"/>
-<!--            <AppenderRef ref="rollingFile"/>-->
+            <AppenderRef ref="rollingFile"/>
         </Root>
 
     </Loggers>

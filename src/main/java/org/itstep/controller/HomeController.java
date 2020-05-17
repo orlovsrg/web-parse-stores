@@ -2,7 +2,9 @@ package org.itstep.controller;
 
 import org.itstep.data.parse.DataUser;
 import org.itstep.dto.UserDto;
+import org.itstep.model.ModelEquipment;
 import org.itstep.model.User;
+import org.itstep.service.analysis.AnalysisService;
 import org.itstep.valodator.CheckLoginValidator;
 import org.itstep.valodator.PasswordValidator;
 import org.slf4j.Logger;
@@ -30,12 +32,15 @@ public class HomeController {
     private final DataUser dataUser;
     @Autowired
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private final AnalysisService analysisService;
 
-    public HomeController(PasswordValidator passwordValidator, CheckLoginValidator checkLoginValidator, DataUser dataUser, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public HomeController(PasswordValidator passwordValidator, CheckLoginValidator checkLoginValidator, DataUser dataUser, BCryptPasswordEncoder bCryptPasswordEncoder, AnalysisService analysisService) {
         this.passwordValidator = passwordValidator;
         this.checkLoginValidator = checkLoginValidator;
         this.dataUser = dataUser;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.analysisService = analysisService;
     }
 
     @GetMapping
@@ -86,9 +91,18 @@ public class HomeController {
     }
 
     @GetMapping("/test")
+    public String testUser(Model model){
+        model.addAttribute("model", new ModelEquipment());
+        return "test";
+    }
+
+    @PostMapping("/test")
     @ResponseBody
-    public String testUser(){
-        return "everything oky";
+    public String testUser(@RequestParam String type, ModelEquipment modelEquipment){
+        System.out.println("type: " + type);
+        System.out.println("modelEquipment: " + modelEquipment);
+        analysisService.checkProduct(type, modelEquipment);
+        return "everything oki";
     }
 
 }
