@@ -7,6 +7,7 @@ import org.itstep.model.ModelEquipment;
 import org.itstep.service.analysis.AnalysisService;
 import org.itstep.valodator.FormattingIncomingData;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -88,7 +89,12 @@ public class ComfyStoreService implements StoreService {
             try {
                 driver.get(urlParsingTypePage + pathVariable + countCurrentPage);
                 Thread.sleep(5000);
-
+                JavascriptExecutor jse = (JavascriptExecutor) driver;
+                for (int j = 0; j < 8; j++) {
+                    jse.executeScript("window.scrollBy(0,1000)", "");
+                    Thread.sleep(700);
+                }
+                Thread.sleep(3000);
                 List<WebElement> elementList = driver.findElements(By.cssSelector("div[data-gtm-location='catalog']"));
                 List<WebElement> listPages = driver.findElements(By.cssSelector("li[class='pager__number']"));
 //                int countPages = listPages

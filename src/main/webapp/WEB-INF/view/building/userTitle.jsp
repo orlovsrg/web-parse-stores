@@ -25,17 +25,26 @@
 </div>
 </c:if>
 
-
-<div class="box">
-    <table>
-        <caption>Мои подписки</caption>
+<div class="box-table">
+    <table class="table-user">
+        <caption class="capa">Мои подписки</caption>
+        <thead>
+        <tr>
+            <td class="td_first">Тип</td>
+            <td class="td_second">Название</td>
+            <td class="td_third">Цена</td>
+            <td class="td_fourth">Магазин</td>
+            <td class="td_fifth"></td>
+        </tr>
+        </thead>
         <tbody>
         <c:forEach var="p" items="${product}">
             <tr>
-                <td>id: ${p.id}</td>
-                <td>title: ${p.title}</td>
-                <td>price: ${p.price}</td>
-                <td>store id: ${p.storeId}</td>
+                <td class="td_first">${p.type}</td>
+                <td class="td_second">${p.title}</td>
+                <td class="td_third">${p.price}</td>
+                <td class="td_fourth">${p.storeName}</td>
+                <td class="td_fifth"><a href="<spring:url value="/stand/delete/?userId="/><sec:authentication property="principal.id"/>&productId=${p.id}" class="delete-sub"><p>Отписаться</p></a></td>
             </tr>
         </c:forEach>
         </tbody>

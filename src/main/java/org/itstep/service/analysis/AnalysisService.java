@@ -1,6 +1,7 @@
 package org.itstep.service.analysis;
 
 import org.itstep.data.parse.DataEquipment;
+import org.itstep.dto.ModelEquipmentDto;
 import org.itstep.model.ModelEquipment;
 import org.itstep.model.Store;
 import org.itstep.service.SubscriptionService;
@@ -40,14 +41,14 @@ public class AnalysisService {
     }
 
 
-    public Map<String, List<ModelEquipment>> getProductsByType(String typeProduct) {
-        Map<String, List<ModelEquipment>> map = new LinkedHashMap<>();
+    public Map<String, List<ModelEquipmentDto>> getProductsByType(String typeProduct) {
+        Map<String, List<ModelEquipmentDto>> map = new LinkedHashMap<>();
         log.info("Stores: {}", "");
         List<String> listTitleProduct = dataEquipment.getAllTitle(typeProduct);
-        List<ModelEquipment> listModel = dataEquipment.getProductsByType(typeProduct);
+//        List<ModelEquipment> listModel = dataEquipment.getProductsByType(typeProduct);
 
         listTitleProduct.stream().limit(5).forEach(n -> {
-            map.put(n, dataEquipment.getProductByName(typeProduct, n));
+            map.put(n, dataEquipment.getProductDtoByName(typeProduct, n));
         });
 
         return map;

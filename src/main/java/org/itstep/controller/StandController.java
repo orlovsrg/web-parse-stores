@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class StandController {
         this.subscriptionService = subscriptionService;
     }
 
-    @GetMapping(value = "/{type}")
+    @GetMapping(value = "/by/{type}")
     public String stand(@PathVariable String type, Model model){
         List<Store> stores = analysisService.getStores();
 
@@ -44,6 +45,12 @@ public class StandController {
     public String subscription(Subscription subscription){
         System.out.println("SUBSCRIPTION: " + subscription);
         subscriptionService.saveSubscription(subscription);
+        return "redirect:/user";
+    }
+
+    @GetMapping("/delete")
+    public String deleteSub(@RequestParam int userId, @RequestParam int productId){
+        subscriptionService.deleteSubscription(userId, productId);
         return "redirect:/user";
     }
 }

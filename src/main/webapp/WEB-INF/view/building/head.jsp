@@ -11,9 +11,9 @@
             Каталог
         </button>
         <div class="dropdown-content">
-            <a href="<spring:url value="/stand" />/phone" class="lk-style">Смартфоны</a>
-            <a href="<spring:url value="/stand" />/laptop" class="lk-style">Ноутбуки</a>
-            <a href="<spring:url value="/stand" />/tv_set" class="lk-style">Телевизоры</a>
+            <a href="<spring:url value="/stand/by" />/phone" class="lk-style">Смартфоны</a>
+            <a href="<spring:url value="/stand/by" />/laptop" class="lk-style">Ноутбуки</a>
+            <a href="<spring:url value="/stand/by" />/tv_set" class="lk-style">Телевизоры</a>
         </div>
     </div>
     <sec:authorize access="isAuthenticated()" var="isUser"/>
@@ -31,7 +31,7 @@
 
                 <a href="<spring:url value="/user"/>" class="lk-style">
 
-                    Кабинет: <span id="user-name"><sec:authentication property="name"/></span>
+                    Кабинет: <span id="user-name"><sec:authentication property="principal.name"/></span>
                 </a>
                 <i class="fa fa-user"></i>
 

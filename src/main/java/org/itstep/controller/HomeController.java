@@ -57,14 +57,15 @@ public class HomeController {
     }
 
     @PostMapping(value = "/login")
-    public String login(@ModelAttribute UserDto userDto, BindingResult bindingResult, Model model) {
+    public String login(@ModelAttribute UserDto userDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         log.info("Post Form login");
         User user = new User();
         user.setLogin(userDto.getCheckLogin());
         user.setPassword(userDto.getCheckPassword());
         int id = dataUser.hasUser(user);
+        System.out.println("id log user: " + id);
         if (id == 0) {
-            bindingResult.rejectValue("checkLogin", "Логин или пароль не совпадают", "Логин или пароль не совпадают");
+           bindingResult.rejectValue("checkLogin", "Логин или пароль не верны", "Логин или пароль не верны");
             return "login";
         }
         model.addAttribute("userDto", dataUser.getOne(id));

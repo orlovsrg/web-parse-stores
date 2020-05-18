@@ -8,6 +8,8 @@ public class ModelEquipmentDto {
     private String imgUrl;
     private int storeId;
     private String storeName;
+    private String type;
+
 
     public ModelEquipmentDto() {
 
@@ -86,6 +88,14 @@ public class ModelEquipmentDto {
 
     public void setStoreName(String storeName) {
         this.storeName = storeName;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override

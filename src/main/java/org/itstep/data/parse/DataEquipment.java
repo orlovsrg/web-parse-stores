@@ -1,5 +1,6 @@
 package org.itstep.data.parse;
 
+import org.itstep.dto.ModelEquipmentDto;
 import org.itstep.model.LinkProductType;
 import org.itstep.model.ModelEquipment;
 import org.itstep.model.Store;
@@ -103,12 +104,7 @@ public class DataEquipment {
     private final String GET_PRODUCT_BY_ID_END = " where id = ?";
 
     public List<String> getAllTitle(String typeProduct) {
-        return jdbcTemplate.query(GET_ALL_TITLE_PRODUCT_START + typeProduct + GET_ALL_TITLE_PRODUCT_END, new RowMapper<String>() {
-            @Override
-            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return rs.getString("title");
-            }
-        });
+        return jdbcTemplate.query(GET_ALL_TITLE_PRODUCT_START + typeProduct + GET_ALL_TITLE_PRODUCT_END, (rs, rowNum) -> rs.getString("title"));
     }
 
     public List<Store> getAllStores() {
@@ -117,6 +113,27 @@ public class DataEquipment {
                 rs.getString("name"),
                 rs.getString("store_url")
         ));
+    }
+    private final String GET_STORE_NAME = "select name from store where id = ?";
+
+    public String getStoreNameById(int id){
+        return jdbcTemplate.queryForObject(GET_STORE_NAME, String.class, id);
+    }
+
+    public List<ModelEquipmentDto> getProductDtoByName(String type, String nameProduct) {
+        log.warn("DATA getProductByName:{}");
+        return jdbcTemplate.query(GET_PRODUCT_BY_NAME_START + type + GET_PRODUCT_BY_NAME_END,
+                (rs, rowNum) -> {
+                    ModelEquipmentDto modelEquipment = new ModelEquipmentDto();
+                    modelEquipment.setId(rs.getInt("id"));
+                    modelEquipment.setTitle(rs.getString("title"));
+                    modelEquipment.setPrice(rs.getInt("price"));
+                    modelEquipment.setImgUrl(rs.getString("img_url"));
+                    modelEquipment.setUrl(rs.getString("url"));
+                    modelEquipment.setStoreId(rs.getInt("store_id"));
+                    modelEquipment.setStoreName(getStoreNameById(rs.getInt("store_id")));
+                    return modelEquipment;
+                }, nameProduct);
     }
 
     public List<ModelEquipment> getProductByName(String type, String nameProduct) {
@@ -134,15 +151,17 @@ public class DataEquipment {
                 }, nameProduct);
     }
 
-    public ModelEquipment getProductById(String type, int productId) {
+    public ModelEquipmentDto getProductById(String type, int productId) {
         return jdbcTemplate.queryForObject(GET_PRODUCT_BY_ID_START + type + GET_PRODUCT_BY_ID_END,
                 (rs, rowNum) -> {
-                    ModelEquipment modelEquipment = new ModelEquipment();
+                    ModelEquipmentDto modelEquipment = new ModelEquipmentDto();
                     modelEquipment.setId(rs.getInt("id"));
                     modelEquipment.setTitle(rs.getString("title"));
                     modelEquipment.setPrice(rs.getInt("price"));
                     modelEquipment.setImgUrl(rs.getString("img_url"));
                     modelEquipment.setUrl(rs.getString("url"));
+                    modelEquipment.setStoreName(getStoreNameById(rs.getInt("store_id")));
+                    modelEquipment.setType(type);
                     modelEquipment.setStoreId(rs.getInt("store_id"));
                     return modelEquipment;
                 }, productId);

@@ -106,9 +106,9 @@ public class FoxtrotStoreService implements StoreService {
                 driver.get(urlParsingTypePage + pathVariable + i);
                 Thread.sleep(2000);
                 JavascriptExecutor jse = (JavascriptExecutor) driver;
-                for (int j = 0; j < 10; j++) {
+                for (int j = 0; j < 8; j++) {
                     jse.executeScript("window.scrollBy(0,1000)", "");
-                    Thread.sleep(500);
+                    Thread.sleep(700);
                 }
                 Thread.sleep(2000);
                 List<WebElement> elementList = driver.findElements(By.cssSelector("div[class='card js-card isTracked']"));

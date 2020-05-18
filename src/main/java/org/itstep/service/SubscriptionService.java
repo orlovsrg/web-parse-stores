@@ -2,6 +2,7 @@ package org.itstep.service;
 
 import org.itstep.data.parse.DataEquipment;
 import org.itstep.data.parse.DataSubscription;
+import org.itstep.dto.ModelEquipmentDto;
 import org.itstep.model.ModelEquipment;
 import org.itstep.model.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +31,21 @@ public class SubscriptionService {
         dataSubscription.addSubscription(subscription);
     }
 
-    public List<ModelEquipment> getAllSubscriptionProduct(int userId) {
+    public List<ModelEquipmentDto> getAllSubscriptionProduct(int userId) {
         List<Subscription> subscriptionList = getAllSubscriptionByUserId(userId);
-        List<ModelEquipment> modelEquipmentList = new ArrayList<>();
+        List<ModelEquipmentDto> modelEquipmentList = new ArrayList<>();
         subscriptionList.forEach(s -> modelEquipmentList.add(dataEquipment.getProductById(s.getProductType(), s.getProductId())));
+        modelEquipmentList.forEach(System.out::println);
         return modelEquipmentList;
     }
 
+
     public void sendMessage() {
         System.out.println("SEND MESSAGE");
+    }
+
+    public void deleteSubscription(int userId, int productId) {
+        Subscription subscription = dataSubscription.getSubscription(userId, productId);
+        dataSubscription.delete(subscription);
     }
 }

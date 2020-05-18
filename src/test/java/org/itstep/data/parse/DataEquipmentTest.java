@@ -104,4 +104,9 @@ class DataEquipmentTest {
         b = dataEquipment.checkPriceProduct("phone", modelEquipment);
         assertFalse(b);
     }
+
+    @Test
+    void getStoreNameById() {
+        assertEquals("foxtrot", dataEquipment.getStoreNameById(1));
+    }
 }
