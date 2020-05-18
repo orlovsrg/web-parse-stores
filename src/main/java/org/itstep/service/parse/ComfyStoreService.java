@@ -121,7 +121,6 @@ public class ComfyStoreService implements StoreService {
                         ModelEquipment modelEquipment = new ModelEquipment(title, price, url, imgUrl, storeId);
                         log.info("Product: {}", modelEquipment);
 
-                        dataEquipment.save(productType, modelEquipment);
                         analysisService.checkProduct(productType, modelEquipment);
 
 
@@ -132,7 +131,7 @@ public class ComfyStoreService implements StoreService {
 
 //                log.info("current page: {} max page: {}", countCurrentPage, countPages);
                 log.info("current page: {}", countCurrentPage);
-                if (countCurrentPage == 5) {
+                if (countCurrentPage == 10) {
                     hasNextPage = false;
                 } else {
                     countCurrentPage++;

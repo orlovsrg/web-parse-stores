@@ -90,19 +90,4 @@ public class HomeController {
         }
     }
 
-    @GetMapping("/test")
-    public String testUser(Model model){
-        model.addAttribute("model", new ModelEquipment());
-        return "test";
-    }
-
-    @PostMapping("/test")
-    @ResponseBody
-    public String testUser(@RequestParam String type, ModelEquipment modelEquipment){
-        System.out.println("type: " + type);
-        System.out.println("modelEquipment: " + modelEquipment);
-        analysisService.checkProduct(type, modelEquipment);
-        return "everything oki";
-    }
-
 }

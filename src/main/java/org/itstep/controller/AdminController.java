@@ -33,6 +33,6 @@ public class AdminController {
     public String parse(){
         log.info("In ParseController parse ");
         parserManager.parse();
-        return "redirect:/admin";
+        return "redirect:/user";
     }
 }

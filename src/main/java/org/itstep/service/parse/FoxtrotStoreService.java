@@ -52,6 +52,7 @@ public class FoxtrotStoreService implements StoreService {
         whatParse = "Pre processing...";
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
+
         try {
             storeId = dataEquipment.storeId(nameStore);
 
@@ -100,7 +101,7 @@ public class FoxtrotStoreService implements StoreService {
 //                    .get();
 
             // Test with a limit of 2 page. There is here should be variable "count".
-            for (int i = 1; i <= 5; i++) {
+            for (int i = 1; i <= 10; i++) {
 
                 driver.get(urlParsingTypePage + pathVariable + i);
                 Thread.sleep(2000);

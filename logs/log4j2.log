@@ -1,1 +1,16 @@
-2020-05-17 20:11:33,803 WARN o.s.w.s.PageNotFound [qtp1927222211-23] No mapping for GET /favicon.ico
+2020-05-18 00:21:22,586 WARN o.s.w.s.PageNotFound [qtp1253356749-21] No mapping for GET /favicon.ico
+2020-05-18 01:47:56,138 WARN o.s.w.s.PageNotFound [qtp1891395659-22] No mapping for GET /parse
+2020-05-18 01:47:56,689 WARN o.s.w.s.PageNotFound [qtp1891395659-20] No mapping for GET /parse
+2020-05-18 02:14:54,315 WARN o.s.w.s.PageNotFound [qtp1891395659-23] No mapping for GET /favicon.ico
+2020-05-18 11:07:42,137 WARN o.s.w.s.PageNotFound [qtp388152654-20] No mapping for GET /favicon.ico
+2020-05-18 11:07:57,877 WARN o.s.w.s.PageNotFound [qtp388152654-20] No mapping for GET /favicon.ico
+2020-05-18 11:08:12,692 WARN o.s.w.s.PageNotFound [qtp388152654-17] No mapping for GET /favicon.ico
+2020-05-18 11:08:22,359 WARN o.s.w.s.PageNotFound [qtp388152654-55] No mapping for GET /favicon.ico
+2020-05-18 11:08:40,396 WARN o.s.w.s.PageNotFound [qtp388152654-55] No mapping for GET /favicon.ico
+2020-05-18 11:10:51,343 WARN o.s.w.s.PageNotFound [qtp388152654-16] No mapping for GET /favicon.ico
+2020-05-18 11:12:47,237 WARN o.s.w.s.PageNotFound [qtp388152654-56] No mapping for GET /favicon.ico
+2020-05-18 11:13:46,798 WARN o.s.w.s.PageNotFound [qtp388152654-28] No mapping for GET /favicon.ico
+2020-05-18 11:15:53,636 WARN o.s.w.s.PageNotFound [qtp388152654-56] No mapping for GET /favicon.ico
+2020-05-18 11:16:45,647 WARN o.s.w.s.PageNotFound [qtp388152654-18] No mapping for GET /favicon.ico
+2020-05-18 11:20:52,877 WARN o.s.w.s.PageNotFound [qtp388152654-18] No mapping for GET /favicon.ico
+2020-05-18 11:34:02,128 WARN o.s.w.s.PageNotFound [qtp388152654-55] No mapping for GET /product/update

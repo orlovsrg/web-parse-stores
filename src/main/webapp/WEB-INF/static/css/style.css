@@ -119,8 +119,8 @@ select {
 
 /* Плавность эффекта */
 * {
-     transition: all .2s ease-in-out;
- }
+    transition: all .2s ease-in-out;
+}
 
 /** {*/
 /*    transition: all .5s ;*/
@@ -168,7 +168,6 @@ body {
     width: 600px;
     margin: 0 auto;
 }
-
 
 
 .item {
@@ -288,11 +287,12 @@ body {
     text-transform: uppercase;
     font-size: 14px;
     font-weight: 800;
-    margin: 0 5px;
+    margin: 0 5px 10px 5px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     max-width: var(--width);
+
 }
 
 .user {
@@ -353,14 +353,14 @@ body {
     font-size: 20px;
 }
 
-.fa-user  {
+.fa-user {
     font-size: 20px;
     letter-spacing: 7px;
     position: relative;
     left: 15px;
 }
 
-.fa-address-card{
+.fa-address-card {
     font-size: 20px;
     letter-spacing: 7px;
     position: relative;
@@ -527,4 +527,13 @@ body {
         width: 310px;
     }
 }
+
+.admin {
+    position: relative;
+    display: block;
+    padding-left: 20px;
+}
+
+
+
 

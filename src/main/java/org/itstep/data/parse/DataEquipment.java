@@ -81,12 +81,11 @@ public class DataEquipment {
     private final String SAVE_OLD_PRODUCT = "insert into old_data_product(title, price, store_id, product_type) values (?,?,?,?)";
 
 
-
-    public void saveOldProduct(String productType, ModelEquipment modelEquipment){
+    public void saveOldProduct(String productType, ModelEquipment modelEquipment) {
         jdbcTemplate.update(SAVE_OLD_PRODUCT, modelEquipment.getTitle(), modelEquipment.getPrice(), modelEquipment.getStoreId(), productType);
     }
 
-    public void update(String productType, ModelEquipment modelEquipment){
+    public void update(String productType, ModelEquipment modelEquipment) {
         log.error("MODEL IN TO update: {}", modelEquipment);
         jdbcTemplate.update(UPDATE_PRODUCT_START + productType + UPDATE_PRODUCT_END, modelEquipment.getPrice(), modelEquipment.getId());
     }
@@ -173,13 +172,25 @@ public class DataEquipment {
     private final String CHECK_PRICE_PRODUCT_END = " where title = ? and store_id = ?";
 
     public boolean hasProduct(String productType, ModelEquipment modelEquipment) {
-        return jdbcTemplate.queryForObject(HAS_PRODUCT_START + productType + HAS_PRODUCT_END, Integer.class, modelEquipment.getTitle(), modelEquipment.getStoreId()) > 0;
+
+        try {
+            return jdbcTemplate.queryForObject(HAS_PRODUCT_START + productType + HAS_PRODUCT_END, Integer.class, modelEquipment.getTitle(), modelEquipment.getStoreId()) > 0;
+        } catch (Exception ex) {
+            return false;
+        }
+
+
     }
 
-    public boolean checkPriceProduct(String typeProduct, ModelEquipment modelEquipment){
-        return jdbcTemplate.queryForObject(CHECK_PRICE_PRODUCT_START + typeProduct + CHECK_PRICE_PRODUCT_END,
-                Integer.class,
-                modelEquipment.getTitle(), modelEquipment.getStoreId()) == modelEquipment.getPrice();
+    public boolean checkPriceProduct(String typeProduct, ModelEquipment modelEquipment) {
+//        try {
+            return jdbcTemplate.queryForObject(CHECK_PRICE_PRODUCT_START + typeProduct + CHECK_PRICE_PRODUCT_END,
+                    Integer.class,
+                    modelEquipment.getTitle(), modelEquipment.getStoreId()) == modelEquipment.getPrice();
+//        } catch (Exception ex) {
+//            return true;
+//        }
+
     }
 
 }
