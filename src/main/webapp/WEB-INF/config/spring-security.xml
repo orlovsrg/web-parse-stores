@@ -16,7 +16,7 @@
                              login-processing-url="/login"
                              username-parameter="checkLogin"
                              password-parameter="checkPassword"
-                             authentication-failure-url="/login?error=credentials"
+                             authentication-failure-url="/login?errorLog=true"
                              default-target-url="/"
                              always-use-default-target="true"/>
 

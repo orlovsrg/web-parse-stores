@@ -197,9 +197,18 @@ body {
 .info-inner {
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: flex-start;
 }
+
+.info-inner-two{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+
 
 .info-inner-main {
     width: 100%;
@@ -554,7 +563,6 @@ body {
 .table-user td {
     border: 1px solid white;
 
-
 }
 
 .td_first {
@@ -588,7 +596,7 @@ body {
     text-align: center;
 }
 
-.delete-sub{
+.delete-sub {
     display: flex;
     width: 100%;
     height: 100%;
@@ -602,12 +610,23 @@ body {
     background: #082b7e;
 }
 
-.capa{
+.capa {
     font-size: 2em;
     height: 50px;
     text-align: center;
     color: #a0c0b6;
 }
+
+.subscription {
+    text-decoration: none;
+    display: block;
+    background-color: white;
+    border-radius: 10px;
+    padding: 2px 5px;
+    color: #35487e !important;
+}
+
+
 
 
 

@@ -88,9 +88,10 @@ public class ComfyStoreService implements StoreService {
         while (hasNextPage) {
             try {
                 driver.get(urlParsingTypePage + pathVariable + countCurrentPage);
+                driver.manage().window().maximize();
                 Thread.sleep(5000);
                 JavascriptExecutor jse = (JavascriptExecutor) driver;
-                for (int j = 0; j < 8; j++) {
+                for (int j = 0; j < 10; j++) {
                     jse.executeScript("window.scrollBy(0,1000)", "");
                     Thread.sleep(700);
                 }
@@ -115,8 +116,8 @@ public class ComfyStoreService implements StoreService {
                         title = formattingIncomingData.formattingTitle(e.findElement(By.cssSelector("a[class='product-item__name-link js-gtm-product-title']"))
                                 .getAttribute("title"));
 
-                        price = formattingIncomingData.formattingPrice(e.findElement(By.cssSelector("span[class='price-value']"))
-                                .getText());
+                        price = formattingIncomingData.formattingPrice(e.findElement(By.cssSelector("div[class='price-box__content price-box__content_special']"))
+                                .findElement(By.cssSelector("span[class='price-value']")).getText());
 
                         url = e.findElement(By.cssSelector("a[class='product-item__name-link js-gtm-product-title']"))
                                 .getAttribute("href");

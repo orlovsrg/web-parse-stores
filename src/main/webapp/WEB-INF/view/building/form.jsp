@@ -13,6 +13,9 @@
 
         <div id="login-tab-content"  class="active">
             <form:form class="login-form" action="/login" method="post" modelAttribute="userDto">
+                <c:if test="${param.errorLog == true}">
+                    <span class="message">Неверный логин или пароль</span>
+                </c:if>
                 <form:errors path="checkLogin" cssClass="message"  />
                 <form:input path="checkLogin" type="text" cssClass="input" id="user_name" autocomplete="off"
                             placeholder="Логин"/>

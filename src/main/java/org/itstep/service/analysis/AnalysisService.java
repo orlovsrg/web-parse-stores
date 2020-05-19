@@ -40,14 +40,20 @@ public class AnalysisService {
         return dataEquipment.getAllStores();
     }
 
+    public int getCountPage(String productType, double itemsAtPage) {
+        double items = dataEquipment.getAllTitle(productType).size() - 1;
+        double countPage = Math.ceil(items / itemsAtPage);
+        return (int) countPage;
+    }
 
-    public Map<String, List<ModelEquipmentDto>> getProductsByType(String typeProduct) {
+
+    public Map<String, List<ModelEquipmentDto>> getProductsByType(String typeProduct, int start, int end) {
         Map<String, List<ModelEquipmentDto>> map = new LinkedHashMap<>();
         log.info("Stores: {}", "");
         List<String> listTitleProduct = dataEquipment.getAllTitle(typeProduct);
 //        List<ModelEquipment> listModel = dataEquipment.getProductsByType(typeProduct);
 
-        listTitleProduct.stream().limit(5).forEach(n -> {
+        listTitleProduct.stream().skip(start).limit(end - start).forEach(n -> {
             map.put(n, dataEquipment.getProductDtoByName(typeProduct, n));
         });
 

@@ -106,7 +106,7 @@ public class FoxtrotStoreService implements StoreService {
                 driver.get(urlParsingTypePage + pathVariable + i);
                 Thread.sleep(2000);
                 JavascriptExecutor jse = (JavascriptExecutor) driver;
-                for (int j = 0; j < 8; j++) {
+                for (int j = 0; j < 10; j++) {
                     jse.executeScript("window.scrollBy(0,1000)", "");
                     Thread.sleep(700);
                 }
