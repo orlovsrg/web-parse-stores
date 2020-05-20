@@ -37,6 +37,14 @@
 
 <div class="pages">
     <c:forEach items="${numbersPage}" var="p">
-        <a href="<spring:url value="?page=${p}" />" class="page">${p}</a>
+
+        <c:if test="${param.page == p}">
+            <a href="<spring:url value="?page=${p}" />" class="page_num_current"><p>${p}</p></a>
+        </c:if>
+        <c:if test="${param.page != p}">
+            <a href="<spring:url value="?page=${p}" />" class="page_num"><p>${p}</p></a>
+        </c:if>
+
+
     </c:forEach>
 </div>
