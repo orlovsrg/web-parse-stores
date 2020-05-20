@@ -138,7 +138,7 @@ public class ComfyStoreService implements StoreService {
 
 //                log.info("current page: {} max page: {}", countCurrentPage, countPages);
                 log.info("current page: {}", countCurrentPage);
-                if (countCurrentPage == 10) {
+                if (countCurrentPage == 5) {
                     hasNextPage = false;
                 } else {
                     countCurrentPage++;

@@ -101,7 +101,7 @@ public class FoxtrotStoreService implements StoreService {
 //                    .get();
 
             // Test with a limit of 2 page. There is here should be variable "count".
-            for (int i = 1; i <= 10; i++) {
+            for (int i = 1; i <= 5; i++) {
 
                 driver.get(urlParsingTypePage + pathVariable + i);
                 Thread.sleep(2000);

@@ -34,4 +34,9 @@
     </div>
 
 </c:forEach>
-<div class="pages"><a>${countPage}</a></div>
+
+<div class="pages">
+    <c:forEach items="${numbersPage}" var="p">
+        <a href="<spring:url value="?page=${p}" />" class="page">${p}</a>
+    </c:forEach>
+</div>
