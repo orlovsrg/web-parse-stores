@@ -17,10 +17,10 @@
 
 
                     </div>
-                    <a href="${p.url}" class="small-item">${p.storeName}</a>
+                    <a href="${p.url}" class="small-item">Магазин ${p.storeName}</a>
                     <div class="info-inner-two">
                             <%--                        <a href="#" class="small-item">Старая цена</a>--%>
-                        <a href="${p.url}" class="small-item">${p.price}</a>
+                        <a href="${p.url}" class="small-item">${p.price} грн</a>
                         <c:if test="${isUser}">
                             <sec:authentication var="userId" property="principal.id"/>
                             <a href="<spring:url value="/stand/subscription?userId=${userId}&productId=${p.id}&productType=${type}"/>"
@@ -38,7 +38,7 @@
 <div class="pages">
     <c:forEach items="${numbersPage}" var="p">
 
-        <c:if test="${param.page == p}">
+        <c:if test="${param.page == p }">
             <a href="<spring:url value="?page=${p}" />" class="page_num_current"><p>${p}</p></a>
         </c:if>
         <c:if test="${param.page != p}">

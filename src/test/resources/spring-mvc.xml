@@ -19,6 +19,8 @@
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/view/" p:suffix=".jsp"/>
 
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate" />
+
     <!--    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">-->
     <!--        <property name="defaultEncoding" value="UTF-8"/>-->
     <!--        <property name="basenames">-->
@@ -36,5 +38,7 @@
             </set>
         </property>
     </bean>
+
+
 
 </beans>

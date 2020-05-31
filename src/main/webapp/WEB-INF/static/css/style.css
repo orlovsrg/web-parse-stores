@@ -152,12 +152,13 @@ body {
 .box {
     display: flex;
     flex-wrap: wrap;
-
+    width: 90%;
+    margin: 0 auto;
 }
 
 .box-table {
-    display: flex;
-    flex-wrap: wrap;
+    /*display: flex;*/
+    /*flex-wrap: wrap;*/
 
 }
 
@@ -550,9 +551,9 @@ body {
 }
 
 .table-user {
-    width: 100%;
+    width: 90%;
     color: silver;
-    margin: 0 20px;
+    margin: 0 auto;
     align-items: start;
     border-collapse: collapse;
 
@@ -648,7 +649,7 @@ body {
     margin: 2px;
     text-decoration: none;
     font-size: 30px;
-    color: white;
+    color: grey;
 }
 
 .page_num_current {
@@ -665,9 +666,9 @@ body {
 }
 
 .page_num:hover {
-    font-size: 50px;
-    color: black;
-    transition: all .05s ease-in-out;
+    font-size: 45px;
+    color: white;
+    transition: all .1s ease-in-out;
 }
 
 

@@ -1,5 +1,7 @@
 package org.itstep.dto;
 
+import java.util.List;
+
 public class ModelEquipmentDto {
     private int id;
     private String title;
@@ -9,6 +11,7 @@ public class ModelEquipmentDto {
     private int storeId;
     private String storeName;
     private String type;
+    private List<Integer> usersId;
 
 
     public ModelEquipmentDto() {
@@ -98,6 +101,14 @@ public class ModelEquipmentDto {
         this.type = type;
     }
 
+    public List<Integer> getUsersId() {
+        return usersId;
+    }
+
+    public void setUsersId(List<Integer> usersId) {
+        this.usersId = usersId;
+    }
+
     @Override
     public String toString() {
         return "ModelEquipmentDto{" +
@@ -108,6 +119,8 @@ public class ModelEquipmentDto {
                 ", imgUrl='" + imgUrl + '\'' +
                 ", storeId=" + storeId +
                 ", storeName='" + storeName + '\'' +
+                ", type='" + type + '\'' +
+                ", usersId=" + usersId +
                 '}';
     }
 }

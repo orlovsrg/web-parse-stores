@@ -79,7 +79,8 @@ public class AnalysisService {
                     modelEquipment.setId(oldModel.getId());
                     dataEquipment.update(productType, modelEquipment);
                     transactionManager.commit(status);
-                    subscriptionService.sendMessage();
+
+                    subscriptionService.sendMessage(productType, modelEquipment);
                 } catch (Exception ex) {
                     transactionManager.rollback(status);
                 }
@@ -89,5 +90,6 @@ public class AnalysisService {
             dataEquipment.save(productType, modelEquipment);
         }
     }
+
 
 }

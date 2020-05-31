@@ -1,5 +1,6 @@
 package org.itstep.data.parse;
 
+import org.itstep.model.ModelEquipment;
 import org.itstep.model.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -47,5 +48,11 @@ public class DataSubscription {
 
     public void delete(Subscription subscription) {
         jdbcTemplate.update(DELETE_SUBSCRIPTION, subscription.getId());
+    }
+
+    private final String GET_USER_ID = "select user_id from user_subscription where product_type = ? and product_id = ?";
+
+    public List<Integer> getUserIdOfSubscription(String type,  int productId){
+       return jdbcTemplate.query(GET_USER_ID, new Object[]{type, productId}, (rs, rowNum) -> rs.getInt("user_id"));
     }
 }

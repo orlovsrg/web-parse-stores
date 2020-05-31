@@ -1,6 +1,1 @@
-2020-05-21 01:20:48,658 WARN o.s.w.s.PageNotFound [qtp602783873-19] No mapping for GET /favicon.ico
-2020-05-21 01:23:31,572 WARN o.s.w.s.PageNotFound [qtp602783873-18] No mapping for GET /favicon.ico
-2020-05-21 01:24:00,471 WARN o.s.w.s.PageNotFound [qtp602783873-28] No mapping for GET /favicon.ico
-2020-05-21 01:24:23,335 WARN o.s.w.s.PageNotFound [qtp602783873-19] No mapping for GET /favicon.ico
-2020-05-21 01:25:15,518 WARN o.s.w.s.PageNotFound [qtp602783873-17] No mapping for GET /favicon.ico
-2020-05-21 01:27:01,600 WARN o.s.w.s.PageNotFound [qtp602783873-28] No mapping for GET /favicon.ico
+2020-05-31 13:05:04,646 WARN o.s.w.s.PageNotFound [qtp2068836662-17] No mapping for GET /favicon.ico

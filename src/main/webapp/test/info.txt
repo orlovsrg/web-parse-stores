@@ -226,3 +226,11 @@ public void testDragDrop() {
      verificationErrors.append(e.toString());
     }
 }
+
+
+// Telegram bot
+
+User name: MessageOfPriceBot
+Token bot: 1270144712:AAEqbu4KvaddHqT1fVwmg4XiI5YUbW9IO-Y
+WebHook url: https://377e33f5.ngrok.io
+
