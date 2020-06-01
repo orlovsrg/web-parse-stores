@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 @Repository
 public class DataEquipment {
@@ -114,9 +115,10 @@ public class DataEquipment {
                 rs.getString("store_url")
         ));
     }
+
     private final String GET_STORE_NAME = "select name from store where id = ?";
 
-    public String getStoreNameById(int id){
+    public String getStoreNameById(int id) {
         return jdbcTemplate.queryForObject(GET_STORE_NAME, String.class, id);
     }
 
@@ -203,12 +205,26 @@ public class DataEquipment {
 
     public boolean checkPriceProduct(String typeProduct, ModelEquipment modelEquipment) {
 //        try {
-            return jdbcTemplate.queryForObject(CHECK_PRICE_PRODUCT_START + typeProduct + CHECK_PRICE_PRODUCT_END,
-                    Integer.class,
-                    modelEquipment.getTitle(), modelEquipment.getStoreId()) == modelEquipment.getPrice();
+        return jdbcTemplate.queryForObject(CHECK_PRICE_PRODUCT_START + typeProduct + CHECK_PRICE_PRODUCT_END,
+                Integer.class,
+                modelEquipment.getTitle(), modelEquipment.getStoreId()) == modelEquipment.getPrice();
 //        } catch (Exception ex) {
 //            return true;
 //        }
+
+    }
+
+    private final String GET_ALL_PRODUCT_ID = "select id from ";
+
+
+    public ModelEquipmentDto getRandomEquipment() {
+        String[] arrType = new String[]{"phone", "laptop", "tv_set"};
+        int idxType = new Random().nextInt(arrType.length);
+
+        String type = arrType[idxType];
+        List<Integer> productsId = jdbcTemplate.queryForList(GET_ALL_PRODUCT_ID + type, Integer.class);
+
+        return getProductById(type, productsId.get(new Random().nextInt(productsId.size())));
 
     }
 

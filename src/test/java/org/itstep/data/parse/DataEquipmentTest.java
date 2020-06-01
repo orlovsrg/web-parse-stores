@@ -1,5 +1,6 @@
 package org.itstep.data.parse;
 
+import org.itstep.dto.ModelEquipmentDto;
 import org.itstep.model.ModelEquipment;
 import org.itstep.model.Store;
 import org.junit.jupiter.api.BeforeAll;
@@ -16,6 +17,7 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -108,5 +110,11 @@ class DataEquipmentTest {
     @Test
     void getStoreNameById() {
         assertEquals("foxtrot", dataEquipment.getStoreNameById(1));
+    }
+
+    @Test
+    void getRandomEquipment() {
+        ModelEquipmentDto dto = dataEquipment.getRandomEquipment();
+        assertTrue(Objects.nonNull(dto));
     }
 }
