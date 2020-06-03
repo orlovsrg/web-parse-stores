@@ -12,18 +12,22 @@ public class FormattingIncomingData {
     }
 
     public String formattingTitle(String title) {
-        if (title == null)
-            return "";
-        title = title.replaceAll("[а-яА-Я]", "");
-        title = title.trim();
 
-        if (')' == title.charAt(title.length() - 1)) {
-            title = title.substring(0, title.lastIndexOf("("));
+        if (title.startsWith("Смартфон") || title.startsWith("Телевизор")) {
+            title = title.replaceAll("\\([^()]*\\)", "");
+            title = title.replaceAll("[а-яА-Я]", "");
+            title = title.replaceAll("(International)", "");
+            return title.replaceAll(" {2,}", " ").trim();
+        } else if (title.startsWith("Ноутбок")) {
+            if (title.lastIndexOf(")") > 0 && title.lastIndexOf(")") != title.length() - 1) {
+                String part = title.substring(title.lastIndexOf("("), title.lastIndexOf(")") + 1);
+                title = title.replace(part, "");
+                title = title + " " + part;
+                title = title.replaceAll(" {2,}", " ").trim();
+                return title;
+            }
+
         }
-
-        title = title.trim();
-        title = title.replaceAll(" {2,}", " ");
-
         return title;
     }
 }

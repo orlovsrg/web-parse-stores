@@ -47,12 +47,11 @@ public class SubscriptionService {
         return modelEquipmentList;
     }
 
-
     public void sendMessage(String type, ModelEquipment modelEquipment) {
         log.info("into sendMessage");
         List<Integer> usersId = dataSubscription.getUserIdOfSubscription(type, modelEquipment.getId());
         log.info("userId: {}", usersId);
-        if (usersId.size() > 0){
+        if (usersId.size() > 0) {
             ModelEquipmentDto dto = dataEquipment.getProductById(type, modelEquipment.getId());
             dto.setUsersId(usersId);
             log.info("dto: {}", dto);

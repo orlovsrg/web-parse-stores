@@ -32,14 +32,24 @@ public class ManagerDb {
 //        elements.forEach(element -> System.out.println(element.getAttribute("src")));
 //        driver.quit();
 
-        Random random = new Random();
-        List<Integer> lidt =  new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            lidt.add(random.nextInt(3));
+//        Random random = new Random();
+//        List<Integer> lidt =  new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            lidt.add(random.nextInt(3));
+//        }
+//
+//        System.out.println(lidt);
+
+        String title = "Ноутбук Lenovo IdeaPad S145-15IWL (81MV0151RA) Black";
+
+        if (title.lastIndexOf(")") > 0 && title.lastIndexOf(")") != title.length() - 1) {
+            String part = title.substring(title.lastIndexOf("("), title.lastIndexOf(")") + 1);
+            title = title.replace(part, "");
+            title = title + " " + part;
+            title = title.replaceAll(" {2,}", " ").trim();
+            System.out.println(title.length());
+            System.out.println(title);
         }
-
-        System.out.println(lidt);
-
 
 
     }

@@ -167,6 +167,7 @@ public class DataEquipment {
                     modelEquipment.setStoreId(rs.getInt("store_id"));
                     return modelEquipment;
                 }, productId);
+
     }
 
     public List<ModelEquipment> getProductsByType(String typeProduct) {
