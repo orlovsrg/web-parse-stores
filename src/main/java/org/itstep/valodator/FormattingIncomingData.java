@@ -1,9 +1,13 @@
 package org.itstep.valodator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class FormattingIncomingData {
+
+    private static final Logger log = LoggerFactory.getLogger(FormattingIncomingData.class);
 
     public int formattingPrice(String data) {
         if (data == null)
@@ -12,7 +16,7 @@ public class FormattingIncomingData {
     }
 
     public String formattingTitle(String title) {
-
+        log.info("title in formatter: {}", title);
         if (title.startsWith("Смартфон") || title.startsWith("Телевизор")) {
             title = title.replaceAll("\\([^()]*\\)", "");
             title = title.replaceAll("[а-яА-Я]", "");

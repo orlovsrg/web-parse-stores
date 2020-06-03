@@ -81,7 +81,6 @@ public class ComfyStoreService implements StoreService {
         //This driver create here for parsing single product
 
 
-
         boolean hasNextPage = true;
         int countCurrentPage = 1;
 
@@ -108,29 +107,36 @@ public class ComfyStoreService implements StoreService {
 
                 try {
                     elementList.forEach(e -> {
-                        String title;
-                        int price;
-                        String url;
-                        String imgUrl;
-
-                        title = formattingIncomingData.formattingTitle(e.findElement(By.cssSelector("a[class='product-item__name-link js-gtm-product-title']"))
-                                .getAttribute("title"));
-
-                        price = formattingIncomingData.formattingPrice(e.findElement(By.cssSelector("div[class='price-box__content price-box__content_special']"))
-                                .findElement(By.cssSelector("span[class='price-value']")).getText());
-
-                        url = e.findElement(By.cssSelector("a[class='product-item__name-link js-gtm-product-title']"))
-                                .getAttribute("href");
-
-                        imgUrl = e.findElement(By.cssSelector("li[class='product-item-gallery__item slick-slide slick-current slick-active']>img"))
-                                .getAttribute("src");
-
-                        ModelEquipment modelEquipment = new ModelEquipment(title, price, url, imgUrl, storeId);
-                        log.info("Product: {}", modelEquipment);
-
-                        analysisService.checkProduct(productType, modelEquipment);
+                        try {
 
 
+                            String title;
+                            int price;
+                            String url;
+                            String imgUrl;
+
+                            title = formattingIncomingData.formattingTitle(e.findElement(By.cssSelector("a[class='product-item__name-link js-gtm-product-title']"))
+                                    .getAttribute("title"));
+
+                            try {
+                                price = formattingIncomingData.formattingPrice(e.findElement(By.cssSelector("span[data-special-price]")).getText());
+                            } catch (Exception ex) {
+                                price = formattingIncomingData.formattingPrice(e.findElement(By.cssSelector("span[data-price]")).getText());
+                            }
+                            url = e.findElement(By.cssSelector("a[class='product-item__name-link js-gtm-product-title']"))
+                                    .getAttribute("href");
+
+                            imgUrl = e.findElement(By.cssSelector("li[class='product-item-gallery__item slick-slide slick-current slick-active']>img"))
+                                    .getAttribute("src");
+
+                            ModelEquipment modelEquipment = new ModelEquipment(title, price, url, imgUrl, storeId);
+                            log.info("Product in parser class: {}", modelEquipment);
+
+                            analysisService.checkProduct(productType, modelEquipment);
+
+                        } catch (Exception ex) {
+                            log.error("Exception while finding getting data product");
+                        }
                     });
                 } catch (Exception ex) {
                     log.error("Error: {}", ex.toString());

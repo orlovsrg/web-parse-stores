@@ -12,6 +12,12 @@
           p:username="${user}"
           p:password="${password}"/>
 
+<!--    <jdbc:initialize-database data-source="dataSource">-->
+<!--        <jdbc:script location="classpath:init.sql"/>-->
+<!--    </jdbc:initialize-database>-->
+
+
+
     <bean class="org.springframework.jdbc.core.JdbcTemplate"
           p:dataSource-ref="dataSource"/>
 

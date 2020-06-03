@@ -12,10 +12,10 @@ create table store
 
 create table link_product
 (
-    id       int auto_increment primary key,
-    store_id int          not null,
-    product_type     varchar(50)  not null,
-    link     varchar(255) not null,
+    id           int auto_increment primary key,
+    store_id     int          not null,
+    product_type varchar(50)  not null,
+    link         varchar(255) not null,
     constraint link_product_store_fk
         foreign key (store_id) references store (id)
 );
@@ -71,9 +71,11 @@ insert into store (name, store_url)
 values ('foxtrot', 'https://www.foxtrot.com.ua/');
 
 insert into link_product (store_id, product_type, link)
-values ((select id from store where name = 'foxtrot'), 'phone', 'https://www.foxtrot.com.ua/ru/shop/mobilnye_telefony_smartfon.html'),
+values ((select id from store where name = 'foxtrot'), 'phone',
+        'https://www.foxtrot.com.ua/ru/shop/mobilnye_telefony_smartfon.html'),
        ((select id from store where name = 'foxtrot'), 'laptop', 'https://www.foxtrot.com.ua/ru/shop/noutbuki.html'),
-       ((select id from store where name = 'foxtrot'), 'tv_set', 'https://www.foxtrot.com.ua/ru/shop/led_televizory.html');
+       ((select id from store where name = 'foxtrot'), 'tv_set',
+        'https://www.foxtrot.com.ua/ru/shop/led_televizory.html');
 
 insert into store (name, store_url)
 values ('comfy', 'https://www.comfy.ua/');
@@ -123,3 +125,11 @@ create table user_subscription
     product_id   int         not null,
     product_type varchar(50) not null
 );
+
+insert into user_table (name, birth_day, login, password, phone_number, email)
+values ('Сергей', '1991-08-06', 'test', '$2a$10$D9t1mnWmMQJkBnUXrEolAOy8k2GH2tjkJu8kh0qanj0wyIAIgBYT6', '637916026',
+        'orlov@mail.com');
+
+insert into user_role_table (user_id, role_id)
+values (1, 1),
+       (1, 2);

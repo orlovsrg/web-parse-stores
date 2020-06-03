@@ -80,11 +80,11 @@ public class DataEquipment {
 
     private final String UPDATE_PRODUCT_START = "update ";
     private final String UPDATE_PRODUCT_END = " set price = ? where id = ?";
-    private final String SAVE_OLD_PRODUCT = "insert into old_data_product(title, price, store_id, product_type) values (?,?,?,?)";
+    private final String SAVE_OLD_PRODUCT = "insert into old_data_product(title, price, url, img_url, store_id, product_type) values (?,?,?,?,?,?)";
 
 
     public void saveOldProduct(String productType, ModelEquipment modelEquipment) {
-        jdbcTemplate.update(SAVE_OLD_PRODUCT, modelEquipment.getTitle(), modelEquipment.getPrice(), modelEquipment.getStoreId(), productType);
+        jdbcTemplate.update(SAVE_OLD_PRODUCT, modelEquipment.getTitle(), modelEquipment.getPrice(), modelEquipment.getUrl(), modelEquipment.getImgUrl(), modelEquipment.getStoreId(), productType);
     }
 
     public void update(String productType, ModelEquipment modelEquipment) {

@@ -83,6 +83,7 @@ public class AnalysisService {
                     subscriptionService.sendMessage(productType, modelEquipment);
                 } catch (Exception ex) {
                     transactionManager.rollback(status);
+                    ex.printStackTrace();
                 }
 
             }
