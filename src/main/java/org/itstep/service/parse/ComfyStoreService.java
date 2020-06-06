@@ -97,13 +97,13 @@ public class ComfyStoreService implements StoreService {
                 Thread.sleep(3000);
                 List<WebElement> elementList = driver.findElements(By.cssSelector("div[data-gtm-location='catalog']"));
                 List<WebElement> listPages = driver.findElements(By.cssSelector("li[class='pager__number']"));
-//                int countPages = listPages
-//                        .stream()
-//                        .map(e -> e.getText().replaceAll("\\D", ""))
-//                        .filter(e -> e.length() > 0)
-//                        .mapToInt(Integer::parseInt)
-//                        .max()
-//                        .getAsInt();
+                int countPages = listPages
+                        .stream()
+                        .map(e -> e.getText().replaceAll("\\D", ""))
+                        .filter(e -> e.length() > 0)
+                        .mapToInt(Integer::parseInt)
+                        .max()
+                        .getAsInt();
 
                 try {
                     elementList.forEach(e -> {
@@ -144,7 +144,7 @@ public class ComfyStoreService implements StoreService {
 
 //                log.info("current page: {} max page: {}", countCurrentPage, countPages);
                 log.info("current page: {}", countCurrentPage);
-                if (countCurrentPage == 5) {
+                if (countCurrentPage == countPages) {
                     hasNextPage = false;
                 } else {
                     countCurrentPage++;

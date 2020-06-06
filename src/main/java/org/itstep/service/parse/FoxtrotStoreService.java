@@ -94,14 +94,14 @@ public class FoxtrotStoreService implements StoreService {
 
 
 //             Page counter variable
-//            int count = elementsCount.stream()
-//                    .map(e -> e.getAttribute("data-page"))
-//                    .map(e -> Integer.parseInt(e))
-//                    .max(Integer::compare)
-//                    .get();
+            int count = elementsCount.stream()
+                    .map(e -> e.getAttribute("data-page"))
+                    .map(e -> Integer.parseInt(e))
+                    .max(Integer::compare)
+                    .get();
 
             // Test with a limit of 2 page. There is here should be variable "count".
-            for (int i = 1; i <= 5; i++) {
+            for (int i = 1; i <= count; i++) {
 
                 driver.get(urlParsingTypePage + pathVariable + i);
                 Thread.sleep(2000);

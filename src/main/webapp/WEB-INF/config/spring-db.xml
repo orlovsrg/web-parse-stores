@@ -12,9 +12,9 @@
           p:username="${user}"
           p:password="${password}"/>
 
-<!--    <jdbc:initialize-database data-source="dataSource">-->
-<!--        <jdbc:script location="classpath:init.sql"/>-->
-<!--    </jdbc:initialize-database>-->
+    <jdbc:initialize-database data-source="dataSource">
+        <jdbc:script location="classpath:init.sql"/>
+    </jdbc:initialize-database>
 
 
 
