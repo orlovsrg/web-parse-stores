@@ -23,12 +23,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.error("User name: {}", username);
+        log.info("User name: {}", username);
 
         UserDto user;
         try {
             user = dataUser.getUserDtoByUserLogin(username);
-            log.error("User: {}", user);
+            log.info("User: {}", user);
         } catch (Exception ex) {
             log.error("User not found by name: {}", username);
             throw  new UsernameNotFoundException("Not found user by name: " + username, ex);

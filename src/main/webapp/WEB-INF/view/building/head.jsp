@@ -20,6 +20,10 @@
 
 
     <div class="user">
+        <i class="fa fa-universal-access"></i>
+        <a href="<spring:url value="/about"/>" class="lk-style">
+            О нас
+        </a>
         <i class="fa fa-chevron-circle-left"></i>
         <a href="<spring:url value="/"/>" class="lk-style">
             Домой
@@ -52,5 +56,6 @@
             <sec:csrfInput/>
         </form:form>
     </div>
+
 
 </div>

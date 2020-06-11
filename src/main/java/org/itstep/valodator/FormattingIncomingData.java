@@ -1,37 +1,34 @@
 package org.itstep.valodator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class FormattingIncomingData {
 
-    private static final Logger log = LoggerFactory.getLogger(FormattingIncomingData.class);
-
-    public int formattingPrice(String data) {
+    public synchronized int formattingPrice(String data) {
         if (data == null)
             return 0;
         return Integer.parseInt(data.replaceAll("\\D", ""));
     }
 
-    public String formattingTitle(String title) {
-        log.info("title in formatter: {}", title);
-        if (title.startsWith("Смартфон") || title.startsWith("Телевизор")) {
+    public synchronized String formattingTitle(String title) {
+
+        if (title.toLowerCase().startsWith("cмартфон") || title.toLowerCase().startsWith("телевизор")) {
             title = title.replaceAll("\\([^()]*\\)", "");
             title = title.replaceAll("[а-яА-Я]", "");
             title = title.replaceAll("(International)", "");
             return title.replaceAll(" {2,}", " ").trim();
-        } else if (title.startsWith("Ноутбок")) {
+        } else if (title.toLowerCase().startsWith("ноутбук")) {
             if (title.lastIndexOf(")") > 0 && title.lastIndexOf(")") != title.length() - 1) {
+                title = title.replaceAll("[а-яА-Я]", "");
                 String part = title.substring(title.lastIndexOf("("), title.lastIndexOf(")") + 1);
                 title = title.replace(part, "");
                 title = title + " " + part;
                 title = title.replaceAll(" {2,}", " ").trim();
                 return title;
             }
-
         }
+
         return title;
     }
 }

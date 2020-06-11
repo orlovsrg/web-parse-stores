@@ -102,7 +102,7 @@ create table user_table
     birth_day    date         not null,
     login        varchar(50)  not null,
     password     varchar(255) not null,
-    phone_number int          not null,
+    phone_number bigint          not null,
     email        varchar(255) not null,
     create_date  timestamp    not null
 );
@@ -127,7 +127,7 @@ create table user_subscription
 );
 
 insert into user_table (name, birth_day, login, password, phone_number, email)
-values ('Сергей', '1991-08-06', 'test', '$2a$10$D9t1mnWmMQJkBnUXrEolAOy8k2GH2tjkJu8kh0qanj0wyIAIgBYT6', '637916026',
+values ('Сергей', '1991-08-06', 'test', '$2a$10$D9t1mnWmMQJkBnUXrEolAOy8k2GH2tjkJu8kh0qanj0wyIAIgBYT6', '380637916026',
         'orlov@mail.com');
 
 insert into user_role_table (user_id, role_id)

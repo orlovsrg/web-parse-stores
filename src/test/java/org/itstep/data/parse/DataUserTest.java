@@ -32,7 +32,7 @@ class DataUserTest {
         userDto.setBirthDay(LocalDate.of(2020, 12, 12));
         userDto.setLogin("undino");
         userDto.setPassword("undino");
-        userDto.setPhoneNumber(637916026);
+        userDto.setPhoneNumber(380637916026L);
         userDto.setEmail("orlov@mail.sg");
         int id = dataUser.save(userDto);
         assertNotNull(id);

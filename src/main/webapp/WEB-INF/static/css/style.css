@@ -390,6 +390,13 @@ body {
 
 }
 
+.fa-universal-access {
+    font-size: 20px;
+    letter-spacing: 7px;
+    position: relative;
+    left: 15px;
+}
+
 /*My point*/
 .lk-style {
     padding-left: 10px;
@@ -671,8 +678,34 @@ body {
     transition: all .1s ease-in-out;
 }
 
+#about {
+    width: 80%;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.66);
+    padding: 25px 40px;
+    /*background-image: url("../../static/img/paper-texture.jpg") ;*/
+    background-size: 100%;
+    color: white;
+    font-size: 20px;
 
+}
 
+#about p {
+    text-indent: 20px;
+}
+
+#about a {
+    /*text-decoration: none;*/
+    color: white;
+    font-size: 25px;
+}
+
+#about h1, #about h3 {
+    color: #7a7a7a;
+    display: inline-block;
+    margin-bottom: 40px;
+    margin-left: 10%;
+}
 
 
 

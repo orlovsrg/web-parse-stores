@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -80,7 +79,6 @@ public class ComfyStoreService implements StoreService {
 
         //This driver create here for parsing single product
 
-
         boolean hasNextPage = true;
         int countCurrentPage = 1;
 
@@ -109,7 +107,6 @@ public class ComfyStoreService implements StoreService {
                     elementList.forEach(e -> {
                         try {
 
-
                             String title;
                             int price;
                             String url;
@@ -131,7 +128,6 @@ public class ComfyStoreService implements StoreService {
 
                             ModelEquipment modelEquipment = new ModelEquipment(title, price, url, imgUrl, storeId);
                             log.info("Product in parser class: {}", modelEquipment);
-
                             analysisService.checkProduct(productType, modelEquipment);
 
                         } catch (Exception ex) {
@@ -142,9 +138,9 @@ public class ComfyStoreService implements StoreService {
                     log.error("Error: {}", ex.toString());
                 }
 
-//                log.info("current page: {} max page: {}", countCurrentPage, countPages);
+                log.info("current page: {} max page: {}", countCurrentPage, countPages);
                 log.info("current page: {}", countCurrentPage);
-                if (countCurrentPage == countPages) {
+                if (countCurrentPage > countPages) {
                     hasNextPage = false;
                 } else {
                     countCurrentPage++;

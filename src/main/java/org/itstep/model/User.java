@@ -9,7 +9,7 @@ public class User {
     private String name;
     private LocalDate birthDay;
     private String login;
-    private int phoneNumber;
+    private long phoneNumber;
     private String password;
     private String email;
     private String role;
@@ -49,11 +49,11 @@ public class User {
         this.login = login;
     }
 
-    public int getPhoneNumber() {
+    public long getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

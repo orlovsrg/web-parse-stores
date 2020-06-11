@@ -13,7 +13,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @Service
-@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class ParserManager {
     private final String storeComfy = "comfy";
     private final String storeFoxtrot = "foxtrot";
@@ -33,10 +32,10 @@ public class ParserManager {
     @PostConstruct
     public void parse() {
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-        service.scheduleWithFixedDelay(() -> {
+        service.scheduleAtFixedRate(() -> {
             new Thread(() -> foxtrotStoreService.startProcess(storeFoxtrot)).start();
             new Thread(() -> comfyStoreService.startProcess(storeComfy)).start();
-        }, 10, 60 * 24, TimeUnit.SECONDS);
+        }, 0, 12, TimeUnit.HOURS);
     }
 
 }

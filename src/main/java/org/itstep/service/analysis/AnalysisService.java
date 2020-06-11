@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.ui.Model;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,22 +57,22 @@ public class AnalysisService {
         return map;
     }
 
-    public void checkProduct(String productType, ModelEquipment modelEquipment) {
-        log.warn("In : checkProduct() model= {}", modelEquipment);
+    public synchronized void checkProduct(String productType, ModelEquipment modelEquipment) {
+        log.info("In : checkProduct() model= {}", modelEquipment);
         boolean hasProduct = dataEquipment.hasProduct(productType, modelEquipment);
-        log.warn("In : checkProduct() hasProduct {}", hasProduct);
+        log.info("In : checkProduct() hasProduct {}", hasProduct);
         if (hasProduct) {
             boolean checkPrice = dataEquipment.checkPriceProduct(productType, modelEquipment);
-            log.warn("In : checkProduct() checkPrice {}", checkPrice);
+            log.info("In : checkProduct() checkPrice {}", checkPrice);
             TransactionStatus status = null;
             if (!checkPrice) {
                 try {
                     status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
-                    log.warn("price change notice of product: {}", modelEquipment);
+                    log.info("price change notice of product: {}", modelEquipment);
                     ModelEquipment oldModel = dataEquipment.getProductByName(productType, modelEquipment.getTitle()).get(0);
-                    log.warn(" old: {}", oldModel);
+                    log.info(" old: {}", oldModel);
                     dataEquipment.saveOldProduct(productType, oldModel);
-                    log.warn("price change notice of product before save old: {}", modelEquipment);
+                    log.info("price change notice of product before save old: {}", modelEquipment);
                     modelEquipment.setId(oldModel.getId());
                     dataEquipment.update(productType, modelEquipment);
                     transactionManager.commit(status);

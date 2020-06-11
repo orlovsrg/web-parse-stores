@@ -10,8 +10,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.sql.PreparedStatement;
@@ -46,7 +44,6 @@ public class DataUser {
     }
 
     public int save(UserDto userDto) {
-
         KeyHolder id = new GeneratedKeyHolder();
         jdbcTemplate.update(con -> {
             PreparedStatement ps = con.prepareStatement(SAVE_USER, Statement.RETURN_GENERATED_KEYS);
@@ -54,7 +51,7 @@ public class DataUser {
             ps.setString(2, userDto.getBirthDay().toString());
             ps.setString(3, userDto.getLogin());
             ps.setString(4, userDto.getPassword());
-            ps.setInt(5, userDto.getPhoneNumber());
+            ps.setLong(5, userDto.getPhoneNumber());
             ps.setString(6, userDto.getEmail());
             return ps;
         }, id);
@@ -72,11 +69,6 @@ public class DataUser {
         });
     }
 
-//    public boolean addRole(int userId, int roleId){
-//        roleId = Objects.
-//        return
-//    }
-
     public User getOne(int id) {
         User user = new User();
         UserDto userDto = jdbcTemplate.queryForObject(GET_USER, new Object[]{id}, (rs, rowNum) -> {
@@ -86,7 +78,7 @@ public class DataUser {
             userResult.setBirthDay(LocalDate.parse(rs.getString("birth_day")));
             userResult.setLogin(rs.getString("login"));
             userResult.setPassword(rs.getString("password"));
-            userResult.setPhoneNumber(rs.getInt("phone_number"));
+            userResult.setPhoneNumber(rs.getLong("phone_number"));
             userResult.setEmail(rs.getString("email"));
             return userResult;
         });
@@ -101,7 +93,6 @@ public class DataUser {
     }
 
     public UserDto getUserDtoByUserLogin(String login) {
-
         return jdbcTemplate.queryForObject(GET_USER_BY_LOGIN, new Object[]{login}, (rs, rowNum) -> {
             UserDto userResult = new UserDto();
             userResult.setId(rs.getInt("id"));
@@ -109,12 +100,11 @@ public class DataUser {
             userResult.setBirthDay(LocalDate.parse(rs.getString("birth_day")));
             userResult.setLogin(rs.getString("login"));
             userResult.setPassword(rs.getString("password"));
-            userResult.setPhoneNumber(rs.getInt("phone_number"));
+            userResult.setPhoneNumber(rs.getLong("phone_number"));
             userResult.setEmail(rs.getString("email"));
             userResult.setRole(getSetRole(userResult.getId()));
             return userResult;
         });
-
     }
 
     public Set<String> getSetRole(int userId) {
@@ -125,7 +115,6 @@ public class DataUser {
             }
         }, userId);
         return new HashSet<>(listRole);
-
     }
 
     public boolean hasLogin(String login) {
@@ -133,18 +122,17 @@ public class DataUser {
         try {
             id = jdbcTemplate.queryForObject(HAS_LOGIN, Integer.class, login);
         } catch (EmptyResultDataAccessException ex) {
-            log.info("new user");
+            log.warn("new user");
         }
         return id > 0;
     }
 
     public int hasUser(User user) {
-
         int id = 0;
         try {
             id = jdbcTemplate.queryForObject(HAS_USER, Integer.class, user.getLogin(), user.getPassword());
         } catch (EmptyResultDataAccessException ex) {
-            log.info("User not found");
+            log.warn("User not found");
         }
         return id;
     }

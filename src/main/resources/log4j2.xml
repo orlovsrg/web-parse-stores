@@ -22,7 +22,7 @@
     </Appenders>
 
     <Loggers>
-        <Logger name="org.itstep" level="TRACE" additivity="false">
+        <Logger name="org.itstep.service.parse.ComfyStoreService" level="TRACE" additivity="false">
             <AppenderRef ref="console"/>
         </Logger>
 

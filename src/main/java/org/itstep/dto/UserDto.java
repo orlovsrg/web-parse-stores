@@ -2,16 +2,13 @@ package org.itstep.dto;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
+
+import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collection;
+import java.util.Set;
 
 @Component
 public class UserDto implements UserDetails {
@@ -23,8 +20,8 @@ public class UserDto implements UserDetails {
     private LocalDate birthDay;
     @Size(min = 4, max = 20)
     private String login;
-    @Digits(integer = 9, fraction = 0)
-    private int phoneNumber;
+    @Digits(fraction = 0, integer = 12)
+    private Long phoneNumber;
     @Size(min = 4, max = 20)
     private String password;
     @Size(min = 4, max = 20)
@@ -88,11 +85,11 @@ public class UserDto implements UserDetails {
         this.login = login;
     }
 
-    public int getPhoneNumber() {
+    public Long getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(Long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -108,7 +105,7 @@ public class UserDto implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         String roles = role.toString().replaceAll("[\\[\\]]", "");
         System.out.println("ROLES ---------------------> " + roles);
-        return  AuthorityUtils.commaSeparatedStringToAuthorityList(roles);
+        return AuthorityUtils.commaSeparatedStringToAuthorityList(roles);
     }
 
     public String getPassword() {
@@ -183,4 +180,5 @@ public class UserDto implements UserDetails {
                 ", role='" + role + '\'' +
                 '}';
     }
+
 }

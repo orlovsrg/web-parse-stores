@@ -3,6 +3,7 @@ package org.itstep.dto;
 import java.util.List;
 
 public class ModelEquipmentDto {
+
     private int id;
     private String title;
     private int price;
@@ -12,7 +13,6 @@ public class ModelEquipmentDto {
     private String storeName;
     private String type;
     private List<Integer> usersId;
-
 
     public ModelEquipmentDto() {
 
@@ -123,4 +123,5 @@ public class ModelEquipmentDto {
                 ", usersId=" + usersId +
                 '}';
     }
+
 }

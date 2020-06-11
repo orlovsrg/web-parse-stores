@@ -8,7 +8,6 @@ import java.time.LocalDate;
 public class DateConverter implements Converter<String, LocalDate> {
     @Override
     public LocalDate convert(String s) {
-        System.out.println("date: " + s);
         return LocalDate.parse(s);
     }
 }

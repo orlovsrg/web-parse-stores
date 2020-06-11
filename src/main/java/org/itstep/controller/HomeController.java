@@ -49,6 +49,11 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/about")
+    public String about(){
+        return "about";
+    }
+
     @GetMapping("/login")
     public String login(Model model) {
         log.info("GET Form login");

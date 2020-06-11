@@ -1,5 +1,6 @@
 function changeProduct() {
-    let url = "http://localhost:8080/api/user";
+    let url = "http://176.114.11.149:8080/api/user";
+    // let url = "http://localhost:8080/api/user";
     let product;
     fetch(url, {
         method: 'GET'
@@ -10,7 +11,7 @@ function changeProduct() {
         product = data;
         let title = product.title;
         let store = product.storeName;
-        let price = product.price;
+        let price = product.price + " грн";
         let link = product.url;
         let imgLink = product.imgUrl;
 
@@ -28,6 +29,8 @@ function changeProduct() {
         price_product.innerText = price
         price_product.setAttribute('href', link);
 
+    }).catch(function (Error) {
+        console.log("Error", Error);
     });
 }
 
