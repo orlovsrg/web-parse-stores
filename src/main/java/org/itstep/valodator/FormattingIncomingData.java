@@ -1,17 +1,19 @@
 package org.itstep.valodator;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope("prototype")
 public class FormattingIncomingData {
 
-    public synchronized int formattingPrice(String data) {
+    public int formattingPrice(String data) {
         if (data == null)
             return 0;
         return Integer.parseInt(data.replaceAll("\\D", ""));
     }
 
-    public synchronized String formattingTitle(String title) {
+    public String formattingTitle(String title) {
 
         if (title.toLowerCase().startsWith("cмартфон") || title.toLowerCase().startsWith("телевизор")) {
             title = title.replaceAll("\\([^()]*\\)", "");
